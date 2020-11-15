@@ -1,1 +1,3 @@
 # lokom
+
+yuk bisa yuk
