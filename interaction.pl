@@ -1,1 +1,0 @@
-% Rule untuk mengecek apakah di sekitarnya ada enemy/shop/dungeon

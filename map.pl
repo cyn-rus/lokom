@@ -1,1 +1,0 @@
-% Membuat rule untuk generate map

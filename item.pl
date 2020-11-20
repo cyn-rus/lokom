@@ -1,1 +1,0 @@
-/* Fakta mengenai equipment (menambah berapa attack, defense, dll.) dan potion */
