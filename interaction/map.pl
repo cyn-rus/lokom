@@ -17,7 +17,7 @@ generate_structure :- generate_wall, generate_wall, generate_building.
 generate_building :-    map_size(S), map_store(Store), map_dungeon(Dungeon), map_quest(Quest),
                         XR is div(S, 2), YR is div(S, 2),
                         ShopX is 1+XR, ShopY is 1+YR, %kuadran 2
-                      random(1, ShopX, X), random(1, ShopY, Y), asserta(map_object(X,Y, Store)),
+                        random(1, ShopX, X), random(1, ShopY, Y), asserta(map_object(X,Y, Store)),
                         DungeonY is ShopY+YR, %kuadran 3
                         random(1, ShopX, X2), random(ShopY, DungeonY, Y2), asserta(map_object(X2,Y2, Dungeon)),
                         QuestX is ShopX+XR, %kuadran 4
@@ -98,6 +98,10 @@ isWall(DX, DY) :-
     map_player(P), map_size(S), map_object(X, Y, P), 
     CheckX is X+DX, CheckY is Y+DY, (CheckX > S ; CheckX < 1 ; CheckY > S; CheckY < 1),
     write("You Crush the wall"), !.
+
+isMoveable(DX, DY) :-
+    map_player(P), map_nothing(N), map_object(X, Y, P), CheckX is DX+X, CheckY is DY+Y,
+    map_object(CheckX, CheckY, Obj), Obj =:= N, !.
 
 isNear(Obj) :-
     map_player(P), map_object(X, Y, P),
