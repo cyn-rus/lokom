@@ -8,7 +8,6 @@ game_start(false).
 start:-
     ["entity/enemy.pl"],
     ["entity/character.pl"],
-    ["./command/test.pl"],
     ["./interaction/map.pl"],
 
     retract(game_start(false)), !,
