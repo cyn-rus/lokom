@@ -43,19 +43,20 @@ gacha :-
     write("The game hasn\'t even started yet. Use \'start.\' to start the game").
 
 pay_potion(Y, ID_Chosen) :-
-    Z1 is Z-Y, retract(gold(Z)), asserta(gold(Z1)), potion(ID_Chosen, X), 
+    Z1 is Z-Y, retract(gold(Z)), asserta(gold(Z1)), potion(ID_Chosen, X, A, B, C, D), 
     asserta(inventory(X)), write("Thank you for purchasing!"). %harus bkin add item ke inventory
 
 /* Buy pots */
 buy :-
     game_start(true),
-    forall((potion(ID, Name), potion_stats(ID, Att, Def, HP), potion_price(ID, Price)),
+    forall(potion(ID, Name, Att, Def, HP, Price),
     (write(Name), nl, write("Attack: "), write(Att), nl, write("Defense: "), nl, write("Health Point: "),
     write(HP), nl, write("Price: "), write(Price))),
+    writeln("Type the potion's name or use \'back\' to go back to main store."),
     read(Param),
-    potion(ID_Chosen, Param),
-    potion_price(ID_Chosen, Y), ( gold_enough(Y) -> pay_potion(Y, ID_Chosen) ; write("Gold not enough. Go kill some enemies or clear some quests.")).
-
+    (Param = back -> open_store ;
+    potion(ID_Chosen, Param, A, B, C, Y),
+    (gold_enough(Y) -> pay_potion(Y, ID_Chosen) ; write("Gold not enough. Go kill some enemies or clear some quests."))).
 buy :-
     game_start(true), !,
     print("You\'re not in a store. Use \'map.\' to check where the store is").
