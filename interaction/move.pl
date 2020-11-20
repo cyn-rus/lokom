@@ -1,3 +1,4 @@
+
 /* Gerak ke atas */
 w :-
     game_start(true),
@@ -8,6 +9,7 @@ w :-
     assertz(map_object(X,Move,P)), 
     retract(map_object(X,Move,N)),
     assertz(map_object(X,Y,N)), !.
+    
 w :- 
     game_start(false), !,
         write('Game has not started, use \"start.\" to play the game"').
