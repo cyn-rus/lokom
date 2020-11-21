@@ -102,8 +102,8 @@ isWall(DX, DY) :-
     write(MSG), !.
 
 isMoveable(DX, DY) :-
-    map_player(P), map_nothing(N), map_object(X, Y, P), CheckX is DX+X, CheckY is DY+Y,
-    map_object(CheckX, CheckY, Obj), Obj =:= N, !.
+    map_player(P), map_object(X, Y, P), CheckX is DX+X, CheckY is DY+Y,
+    (\+map_object(CheckX, CheckY, _)), !.
 
 isNear(Obj) :-
     map_player(P), map_object(X, Y, P),
@@ -122,5 +122,25 @@ isNear(Obj) :-
 
 isNear(Obj) :-
     map_player(P), map_object(X, Y, P),
-    A is Y+1, map_object(A, Y, Obj2),
+    A is Y+1, map_object(X, A, Obj2),
+    Obj2 =:= Obj, !.
+
+isNear(Obj) :-
+    map_player(P), map_object(X, Y, P),
+    A is X-1, B is Y-1, map_object(A, B, Obj2),
+    Obj2 =:= Obj, !.
+
+isNear(Obj) :-
+    map_player(P), map_object(X, Y, P),
+    A is X-1, B is Y+1, map_object(A, B, Obj2),
+    Obj2 =:= Obj, !.
+
+isNear(Obj) :-
+    map_player(P), map_object(X, Y, P),
+    A is X+1, B is Y-1, map_object(A, B, Obj2),
+    Obj2 =:= Obj, !.
+
+isNear(Obj) :-
+    map_player(P), map_object(X, Y, P),
+    A is X+1, B is Y+1, map_object(A, B, Obj2),
     Obj2 =:= Obj, !.
