@@ -56,7 +56,7 @@ make_vwall(X, Y, Count) :-  map_boulderwall(Wall), assertz(map_object(X,Y, Wall)
 map :- game_start(true), !, draw_map.
 
 map :- !,
-	write("Game has not started, use \'start.\' to play the game").
+	msg_game_not_started(MSG), write(MSG).
 		
 % Left Border
 draw_point(X, Y) :- map_size(S), map_wall(W),
@@ -92,12 +92,14 @@ draw_map :- draw_point(0, 0).
 isWall(DX, DY) :-
     map_player(P), map_boulderwall(W), map_object(X, Y, P), CheckX is DX+X, CheckY is DY+Y,
     map_object(CheckX, CheckY, Obj), Obj =:= W,
-    write("You Crush the wall"), !.
+    msg_crush_wall(MSG),
+    write(MSG), !.
 
 isWall(DX, DY) :-
     map_player(P), map_size(S), map_object(X, Y, P), 
     CheckX is X+DX, CheckY is Y+DY, (CheckX > S ; CheckX < 1 ; CheckY > S; CheckY < 1),
-    write("You Crush the wall"), !.
+    msg_crush_wall(MSG),
+    write(MSG), !.
 
 isMoveable(DX, DY) :-
     map_player(P), map_nothing(N), map_object(X, Y, P), CheckX is DX+X, CheckY is DY+Y,
