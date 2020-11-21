@@ -1,70 +1,49 @@
-
+on_move :- draw_map.
 /* Gerak ke atas */
 w :-
     game_start(true),
     (\+ isWall(0, -1)), isMoveable(0, -1),
     map_player(P), map_object(X,Y,P), map_nothing(N),
     Move is Y-1,
-    msg_move("W", MSG), write(MSG),
+    msg_move("W", MSG),
     retract(map_object(X,Y,P)),
-    assertz(map_object(X,Move,P)), 
-    retract(map_object(X,Move,N)),
-    assertz(map_object(X,Y,N)), !.
+    assertz(map_object(X,Move,P)), on_move, write(MSG), !.
 
-w :- 
-    game_start(false), !,
-        write('Game has not started, use \"start.\" to play the game"').
-w :- 
-    in_battle, !,
-        write('You are in a battle. Use \'help.\' to display all commands available in a battle!').
+w :- game_start(false), msg_game_not_started(MSG), write(MSG), !.
+w :- in_battle(true), msg_in_battle(MSG), write(MSG), !.
+
 s :-
     game_start(true),
     (\+ isWall(0, 1)), isMoveable(0, 1),
     map_player(P), map_object(X,Y,P), map_nothing(N),
     Move is Y+1, 
-    msg_move("S", MSG), write(MSG),
+    msg_move("S", MSG),
     retract(map_object(X,Y,P)),
-    assertz(map_object(X,Move,P)), 
-    retract(map_object(X,Move,N)),
-    assertz(map_object(X,Y,N)), !.
-    
-s :- 
-    game_start(false), !,
-        write('Game has not started, use \"start.\" to play the game"').
-s :- 
-    in_battle, !,
-        write('You are in a battle. Use \'help.\' to display all commands available in a battle!').
+    assertz(map_object(X,Move,P)), on_move, write(MSG), !.
+ 
+s :- game_start(false), msg_game_not_started(MSG), write(MSG), !.
+s :- in_battle(true), msg_in_battle(MSG), write(MSG), !.
+
 a :-
     game_start(true),
     (\+ isWall(-1, 0)), isMoveable(-1, 0),
     map_player(P), map_object(X,Y,P), map_nothing(N),
     Move is X-1, 
-    msg_move("A", MSG), write(MSG),
+    msg_move("A", MSG),
     retract(map_object(X,Y,P)),
-    assertz(map_object(Move,Y,P)), 
-    retract(map_object(Move,Y,N)),
-    assertz(map_object(X,Y,N)), !.
+    assertz(map_object(Move,Y,P)), on_move, write(MSG), !.
     
-a :- 
-    game_start(false), !,
-        write('Game has not started, use \"start.\" to play the game"').
-a :- 
-    in_battle, !,
-        write('You are in a battle. Use \'help.\' to display all commands available in a battle!').
+a :- game_start(false), msg_game_not_started(MSG), write(MSG), !.
+a :- in_battle(true), msg_in_battle(MSG), write(MSG), !.
+
 d :-
     game_start(true),
     (\+ isWall(1, 0)), isMoveable(1, 0),
     map_player(P), map_object(X,Y,P), map_nothing(N),
-    Move is X+1, 
-    msg_move("D", MSG), write(MSG),
+    Move is X+1,
+    msg_move("D", MSG), 
     retract(map_object(X,Y,P)),
-    assertz(map_object(Move,Y,P)), 
-    retract(map_object(Move,Y,N)),
-    assertz(map_object(X,Y,N)), !.
+    assertz(map_object(Move,Y,P)), on_move, write(MSG), !.
     
-d :- 
-    game_start(false), !,
-        write('Game has not started, use \"start.\" to play the game"').
-d :- 
-    in_battle, !,
-        write('You are in a battle. Use \'help.\' to display all commands available in a battle!').
+d :- game_start(false), msg_game_not_started(MSG), write(MSG), !.
+d :- in_battle(true), msg_in_battle(MSG), write(MSG), !.
