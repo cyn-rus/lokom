@@ -7,7 +7,7 @@ w :-
     Move is Y-1,
     msg_move("W", MSG),
     retract(map_object(X,Y,P)),
-    assertz(map_object(X,Move,P)), on_move, write(MSG), !.
+    assertz(map_object(X,Move,P)), on_move, found, write(MSG), !.
 
 w :- game_start(false), msg_game_not_started(MSG), write(MSG), !.
 w :- in_battle(true), msg_in_battle(MSG), write(MSG), !.
@@ -22,7 +22,7 @@ s :-
     assertz(map_object(X,Move,P)), on_move, write(MSG), !.
  
 s :- game_start(false), msg_game_not_started(MSG), write(MSG), !.
-s :- in_battle(true), msg_in_battle(MSG), write(MSG), !.
+s :- in_battle(true), msg_in_battle(MSG), found,write(MSG), !.
 
 a :-
     game_start(true),
@@ -31,7 +31,7 @@ a :-
     Move is X-1, 
     msg_move("A", MSG),
     retract(map_object(X,Y,P)),
-    assertz(map_object(Move,Y,P)), on_move, write(MSG), !.
+    assertz(map_object(Move,Y,P)), on_move, found,write(MSG), !.
     
 a :- game_start(false), msg_game_not_started(MSG), write(MSG), !.
 a :- in_battle(true), msg_in_battle(MSG), write(MSG), !.
@@ -43,7 +43,7 @@ d :-
     Move is X+1,
     msg_move("D", MSG), 
     retract(map_object(X,Y,P)),
-    assertz(map_object(Move,Y,P)), on_move, write(MSG), !.
+    assertz(map_object(Move,Y,P)), on_move, found,write(MSG), !.
     
 d :- game_start(false), msg_game_not_started(MSG), write(MSG), !.
 d :- in_battle(true), msg_in_battle(MSG), write(MSG), !.

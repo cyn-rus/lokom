@@ -30,8 +30,8 @@ print_battle :-
 start_battle :-
     retract(in_battle(false)),
     assertz(in_battle(true)),
-    enemy(enemy_id, enemy_name, enemy_hp, enemy_atk, enemy_defense, enemy_level),
-    write("Enemy "), write(enemy_nama), write(" has appeared!"), nl,
+    # enemy(enemy_id, enemy_name, enemy_hp, enemy_atk, enemy_defense, enemy_level),
+    # write("Enemy "), write(enemy_nama), write(" has appeared!"), nl,
     assertz(enemy_health(enemy_hp)),
     print_battle.
 
@@ -53,12 +53,11 @@ next_turn :-
     enemy_attack.
 
 attack :-
-    in_battle(true),
+    in_battle(true),!,
     char_attack(Atk),
-    enemy(enemy_id, _, _, _, enemy_defense, _),
-    /* Weapon attack */
-    AtkNew is Atk - enemy_defense,
-    reduce_enemy_health(AtkNew),
+    char_weapon(weapon),
+    calculate_damage(Atk, def, weapon, total)
+    reduce_enemy_health(total),
     next_turn.
 
 attack :- 
@@ -66,7 +65,7 @@ attack :-
     write('Not in battle').
 
 special :-
-    in_battle(true),
+    in_battle(true), !,
     can_special(true),
     char_job(Job),
     special_attack(_, Job, Name, Atk),
@@ -111,7 +110,7 @@ run :-
     write('Not in battle').
 
 found :- 
-    found_enemy(7,Anon) , !,
+    found_enemy(Anon) , !,
     retract(enemy_type(_)),
     assertz(enemy_type(Anon)),
     enemy_hp(Anon, HP),
@@ -160,3 +159,17 @@ calculate_damage(base, def, weapon, total) :-
     Atk is base - def,
     total is Atk + weapon,
     total > 0, !, total is 1.
+current_status :-  
+    write("Level : "),
+    write(char_level),nl,
+    write("Health : "),
+    write(char_hp),nl,
+    write("Attack : "),
+    Attnew is char_attack + weapon,
+    write(Attnew),nl,
+    write("Defense : "),
+    write(char_defense),nl.
+
+
+
+    

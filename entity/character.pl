@@ -80,6 +80,25 @@ level_up :-
     level_up_def(LEVEL_NOW),
     msg_level_up(MSG),
     write(MSG).
-
+show_status :- 
+    write("Job : "),
+    write(char_job),nl,
+    write("Level : "),
+    write(char_level),nl,
+    write("Health : "),
+    write(char_hp),
+    write("/"),
+    write(char_maxhp),nl,
+    write("Attack : "),
+    Attnew is char_attack + weapon,
+    write(Attnew),nl,
+    write("Defense : "),
+    write(char_defense),nl,
+    write("Exp : "),
+    write(char_exp),
+    write("/"),
+    write(char_maxexp),nl,
+    write("Gold : ").
+    write(char_gold),nl.
 /* ni belom ada? */
 pay_potion(Y, ID_Chosen).
