@@ -2,14 +2,22 @@
 /* File for starting and initializing the game. */
 
 :- dynamic(game_start/1).
+:- dynamic(in_battle/1). %sementara
 
 game_start(false).
 
-start:-
+start :-
     ["entity/enemy.pl"],
-    ["entity/character.pl"],
+    ["entity/message.pl"],
+    ["entity/item.pl"],
     ["./interaction/map.pl"],
+    ["./interaction/move.pl"],
+    ["./interaction/interaction.pl"],
+    /*mana_sempat(A,B,C,D),
+    keburu_telat(E,F,G),
+    writeln(A),writeln(B),writeln(C),writeln(D),writeln(),writeln(E),writeln(F),writeln(G),writeln(),*/
 
+    asserta(in_battle(false)),
     retract(game_start(false)), !,
     asserta(game_start(true)),
     generate_structure, map_player(P),
@@ -19,7 +27,9 @@ start :-
     write('Use \'help.\' to look at available commands!').
 
 help :-
-    write('You have been helped.'). % TODO create help
+    write('You have been helped.'), nl,
+    show_help.
+    /* Cek message.pl */
 
 quit :- 
     game_start(true),

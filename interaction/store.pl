@@ -1,73 +1,106 @@
 /* Fakta untuk item dengan mengunakkan sistem gacha (random) */
 
 /* Check whether gold is enough or not */
-gold_enough(X) :-
-    gold(Y),
-    Y >= X.
+
+is_in_store :- game_start(true), isNear("S").
 
 open_store :-
-  game_start(true), !,
-    write("Welcome to SimpaeTu\'s Store, you need it, we got it."),
-    write("Use \'gacha\' to get weapons. Gold needed is 100."),
-    write("Use \'buy\' to buy potions."),
-    write("Use \'quit\' to go back to your adventure!"),
+    game_start(true), is_in_store, msg_store_welcome(MSG, MSG2, MSG3, MSG4),
+    write(MSG), nl, write(MSG2), nl, write(MSG3), nl, write(MSG4), nl, 
     read(Param),
     ((Param = gacha -> gacha);
-    (Param = buy -> buy);
-    (Param = quit -> exit_store)).
+    (Param = buy -> buy)).
 
 /* Gacha yoohoo */
+
+/* Case: inventory not full, gold enough */
 gacha :-
-    game_start(true),
+    is_in_store,
+    inventory(List, Max),
+    /* Check Inventory */
+    count_elmt(List, Num),
+    Num < Max,
+    /* Cont'd */
     gold_enough(100), !,
-    New_X is X - 100,
-    retract(gold(X)),
-    asserta(gold(New_X)),
-    /*aaaaaaaaaaaaaaaaaaaaaaaaa*/
-    random(0,6,Equip).
-    /* Masukin ke inventory-nya gmna ya... */
-    /* assert ke inventory */
+    removeGold(100),
+    random(0, 8, ID),
+    equipment(ID, Name, Att, Def, HP), msg_gacha_get(MSG),
+    write(MSG), item_print(Name, Att, Def, HP).
+    /* Input to Inventory */
+    add_elmt(ID, List, Result),
+    retract(inventory(List, Max)),
+    asserta(inventory(Result, Max)).
+
+
+/* Case: inventory full */
+gacha :-
+    is_in_store,
+    inventory(List, Max),
+    /* Check Inventory */
+    count_elmt(List, Num),
+    Num == Max,
+    /* Cont'd */
+    msg_store_inventory_full(MSG), write(MSG), !.
+
+/* Case: gold not enough */
+gacha :-
+    is_in_store,
+    (\+ gold_enough(100)),
+    msg_store_gold_not_enough(MSG), write(MSG), !.
 
 gacha :-
-    game_start(true),
-    (\+ gold_enough(100)), !,
-    gold(X) < 100, !,
-    write('Gold not enough. Go kill some enemies or clear some quests.').
+    game_start(true), (\+ isNear("S")),
+    msg_store_not_near(MSG), write(MSG), !.
 
 gacha :-
-    game_start(true), !,
-    write("You\'re not in a store. Use \'map.\' to check where the store is").
-
-gacha :-
-    game_start(false), !,
-    write("The game hasn\'t even started yet. Use \'start.\' to start the game").
+    game_start(false),
+    msg_game_not_started(MSG), write(MSG), !.
 
 pay_potion(Y, ID_Chosen) :-
-    Z1 is Z-Y, retract(gold(Z)), asserta(gold(Z1)), potion(ID_Chosen, X, A, B, C, D), 
-    asserta(inventory(X)), write("Thank you for purchasing!"). %harus bkin add item ke inventory
+    inventory(List, Max),
+    removeGold(Y), potion(ID_Chosen, X, A, B, C, D),
+    /* Input to Inventory */
+    add_elmt(ID_Chosen, List, Result),
+    retract(inventory(List, Max)),
+    asserta(inventory(Result, Max)).
+    msg_store_after_buy(MSG), write(MSG).
 
 /* Buy pots */
+
+/* Case: inventory not full */
+/* Sorry I had to, it was getting confusing... */
 buy :-
     game_start(true),
+    in_battle(false), !,
+    /* Check Inventory */
+    inventory(List, Max),
+    count_elmt(List, Num),
+    Num < Max,
+    /* Cont'd */
     forall(potion(ID, Name, Att, Def, HP, Price),
-    (write(Name), nl, write("Attack: "), write(Att), nl, write("Defense: "), nl, write("Health Point: "),
-    write(HP), nl, write("Price: "), write(Price))),
-    writeln("Type the potion's name or use \'back\' to go back to main store."),
+    potion_print(Name, Att, Def, HP, Price)),
+    msg_store_potions(MSG), write(MSG),
     read(Param),
     (Param = back -> open_store ;
     potion(ID_Chosen, Param, A, B, C, Y),
-    (gold_enough(Y) -> pay_potion(Y, ID_Chosen) ; write("Gold not enough. Go kill some enemies or clear some quests."))).
+    (gold_enough(Y) -> pay_potion(Y, ID_Chosen) ; msg_store_gold_not_enough)).
+
+/* Case: inventory full */
 buy :-
-    game_start(true), !,
-    print("You\'re not in a store. Use \'map.\' to check where the store is").
+    game_start(true),
+    in_battle(false), !,
+    /* Check Inventory */
+    inventory(List, Max),
+    count_elmt(List, Num),
+    Num =:= Max,
+    /* Cont'd */
+    msg_store_inventory_full(MSG), write(MSG), !.
+
+buy :-
+    game_start(true),
+    in_battle(true), !,
+    msg_in_battle(MSG), write(MSG).
 
 buy :-
     game_start(false),
-    write("The game hasn\'t even started yet. Use \'start.\' to start the game").
-
-exit_store :-
-    game_start(true),
-    write("Thank you for visiting SimpaeTu\'s Store. Please do come back again!"),
-    retract(is_in_store(true)),
-    asserta(is_in_store(false)),
-    map.
+    msg_game_not_started(MSG), write(MSG).

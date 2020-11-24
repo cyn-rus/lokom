@@ -3,7 +3,7 @@ on_move :- draw_map.
 w :-
     game_start(true),
     (\+ isWall(0, -1)), isMoveable(0, -1),
-    map_player(P), map_object(X,Y,P), map_nothing(N),
+    map_player(P), map_object(X,Y,P),
     Move is Y-1,
     msg_move("W", MSG),
     retract(map_object(X,Y,P)),
@@ -15,7 +15,7 @@ w :- in_battle(true), msg_in_battle(MSG), write(MSG), !.
 s :-
     game_start(true),
     (\+ isWall(0, 1)), isMoveable(0, 1),
-    map_player(P), map_object(X,Y,P), map_nothing(N),
+    map_player(P), map_object(X,Y,P),
     Move is Y+1, 
     msg_move("S", MSG),
     retract(map_object(X,Y,P)),
@@ -27,7 +27,7 @@ s :- in_battle(true), msg_in_battle(MSG), write(MSG), !.
 a :-
     game_start(true),
     (\+ isWall(-1, 0)), isMoveable(-1, 0),
-    map_player(P), map_object(X,Y,P), map_nothing(N),
+    map_player(P), map_object(X,Y,P),
     Move is X-1, 
     msg_move("A", MSG),
     retract(map_object(X,Y,P)),
@@ -39,7 +39,7 @@ a :- in_battle(true), msg_in_battle(MSG), write(MSG), !.
 d :-
     game_start(true),
     (\+ isWall(1, 0)), isMoveable(1, 0),
-    map_player(P), map_object(X,Y,P), map_nothing(N),
+    map_player(P), map_object(X,Y,P),                      
     Move is X+1,
     msg_move("D", MSG), 
     retract(map_object(X,Y,P)),
