@@ -2,24 +2,29 @@
 /* File for starting and initializing the game. */
 
 :- dynamic(game_start/1).
-:- dynamic(in_battle/1). %sementara
 
 game_start(false).
 
 start :-
-    ["entity/enemy.pl"],
     ["entity/message.pl"],
+    ["entity/enemy.pl"],
+    ["entity/character.pl"],
     ["entity/item.pl"],
+    ["./interaction/battle/battle.pl"],
+    ["./interaction/battle/cmd.pl"],
     ["./interaction/map.pl"],
     ["./interaction/move.pl"],
     ["./interaction/interaction.pl"],
+   /* ["./interaction/store.pl"],*/
     /*mana_sempat(A,B,C,D),
     keburu_telat(E,F,G),
     writeln(A),writeln(B),writeln(C),writeln(D),writeln(),writeln(E),writeln(F),writeln(G),writeln(),*/
 
-    asserta(in_battle(false)),
     retract(game_start(false)), !,
     asserta(game_start(true)),
+    asserta(in_battle(false)),
+    asserta(char_weapon(999)),
+    asserta(char_armor(999)),
     generate_structure, map_player(P),
     asserta(map_object(15,1, P)).
 

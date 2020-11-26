@@ -2,16 +2,17 @@
 
 /* Equipments */
 /* Format: ID, Name, att, def, HP */
+equipment(999, "Nothing", 0, 0, 0).
 equipment(0, "He em Sword", 3, 0, 0). 
 equipment(1, "Manna Bow", 5, 0, 0).
 equipment(2, "Silicon Staff", 7, 0, 0).
 equipment(3, "Fesh Dagger", 8, 0, 0).
 equipment(4, "Stack Overflow", 99, 99, 99).
-equipment(5, "Nomiap ", 0, 5, 0).
-equipment(6, "Saiacan Icant", 0, 7, 3).
-equipment(7, "Teesllat", 2, 4, 3).
-equipment(8, "Cabooru", 3, 7, 6).
-idx_maxequipment(8).
+equipment(5, "Nomiap Armor", 0, 5, 0).
+equipment(6, "Saiacan Icant Armor", 0, 7, 3).
+equipment(7, "Teesllat Headband", 2, 4, 3).
+equipment(8, "Cabooru Necklace", 3, 7, 6).
+idx_maxequipment(9).
 
 /* Facts for weapons */
 weapon(0).
@@ -30,12 +31,12 @@ accessories(8).
 
 /* Potions */
 /* Format: ID, Name, att, def, HP, price */
-potion(0, "Yuk", 0, 0, 5, 5).
-potion(1, "Bisa Yucc", 0, 2, 4, 7).
-potion(2, "IF2121", 5, 5, 0, 14).
-potion(3, "Assembly", 7, 2, 3, 18).
-potion(4, "Emergency Food", 2, 10, 10, 25).
-potion(5, "Childe", 10, 10, 10, 30).
+potion(-1, "Yuk", 0, 0, 5, 5).
+potion(-2, "Bisa Yucc", 0, 2, 4, 7).
+potion(-3, "IF2121", 5, 5, 0, 14).
+potion(-4, "Assembly", 7, 2, 3, 18).
+potion(-5, "Emergency Food", 2, 10, 10, 25).
+potion(-6, "Childe", 10, 10, 10, 30).
 
 item_print(NAME, ATK, DEF, HP) :-
     write(NAME), nl,
@@ -43,9 +44,21 @@ item_print(NAME, ATK, DEF, HP) :-
     write("DEF: "), write(DEF), nl,
     write("HP : "), write(HP), nl.
 
-potion_print(NAME, ATK, DEF, HP, PRICE) :-
+every_potion_print(ID, NAME, ATK, DEF, HP, PRICE) :-
+    Number is ID*(-1),
+    write(Number), write(". "),
     write(NAME), nl,
     write("ATK   : "), write(ATK), nl,
     write("DEF   : "), write(DEF), nl,
     write("HP    : "), write(HP), nl,
-    write("Price : "), write(PRICE), nl.
+    write("Price : "), write(PRICE), nl, nl.
+
+potion_print(ID, NAME, ATK, DEF, HP, PRICE) :-
+    ID =:= -6,
+    every_potion_print(ID, NAME, ATK, DEF, HP, PRICE), !.
+
+potion_print(ID, NAME, ATK, DEF, HP, PRICE) :-
+    every_potion_print(ID, NAME, ATK, DEF, HP, PRICE),
+    NEW_ID is ID - 1,
+    potion(NEW_ID, NEW_NAME, NEW_ATK, NEW_DEF, NEW_HP, NEW_PRICE),
+    potion_print(NEW_ID, NEW_NAME, NEW_ATK, NEW_DEF, NEW_HP, NEW_PRICE).

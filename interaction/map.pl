@@ -61,31 +61,33 @@ map :- !,
 % Left Border
 draw_point(X, Y) :- map_size(S), map_wall(W),
 					X =:= 0, Y =< S+1, write(W), write(" "),
-					DX is X+1, draw_point(DX, Y).
+					DX is X+1, draw_point(DX, Y), !.
 % Right Border
 draw_point(X, Y) :- map_size(S), map_wall(W),
                     X =:= S+1, Y =< S+1, write(W), write(" "), nl,
-					DY is Y+1, draw_point(0, DY).
+					DY is Y+1, draw_point(0, DY), !.
 
 % Top Border		
 draw_point(X, Y) :- map_size(S), map_wall(W),
                     X < S+1, X > 0, Y =:= 0, write(W), write(" "),
-					DX is X+1, draw_point(DX, Y).
+					DX is X+1, draw_point(DX, Y), !.
 % Bottom Border	
 draw_point(X, Y) :- map_size(S), map_wall(W),
 					X < S+1, X > 0, Y =:= S+1, write(W), write(" "),
-					DX is X+1, draw_point(DX, Y).				
+					DX is X+1, draw_point(DX, Y), !.			
 
 draw_point(X, Y) :- map_size(S),
 					X < S+1, X > 0, Y < S+1, Y > 0,
 					map_object(X, Y, Smth), !, write(Smth), write(" "),
-					DX is X+1, draw_point(DX, Y).
+					DX is X+1, draw_point(DX, Y), !.
 
 draw_point(X, Y) :- map_size(S), map_nothing(N),
 					X < S+1, X > 0, Y < S+1, Y > 0,
 					(\+ map_object(X, Y, _)),
 					write(N), write(" "),
-					DX is X+1, draw_point(DX, Y).
+					DX is X+1, draw_point(DX, Y), !.
+
+draw_point(X,Y) :- true, !.
 
 draw_map :- draw_point(0, 0).
 

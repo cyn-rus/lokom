@@ -2,7 +2,7 @@
 /* Dynamic untuk EXP, level, attack, defense, dan max HP */
 /* Rule EXP sudah melewati batas */
 
-/* Dynamic predicates */
+/* Dynamic predica */
 :- dynamic(char_job/1).
 :- dynamic(char_maxhp/1).
 :- dynamic(char_hp/1).
@@ -20,53 +20,37 @@ job(2, "Sorcerer", 15, 7, 4, "staff").
 job(3 , "Assassin", 25, 5, 3, "dagger").
 job(4, "Cheater", 99, 99, 99, "buffer overflow").
 
-/* Calculate new max */
-new_max_exp(LEVEL, NEW_MAX) :-
-    power(LEVEL, 3, X1),
-    X2 is X1 * 4,
-    NEW_MAX is ceiling(X2 // 5).
+/* Special attack */
+/* Format: ID, job ID, special attack name, damage */
+special_attack(0, 0, "Slash of Heaven", 10).
+special_attack(1, 1, "Raining Sun", 15).
+special_attack(2, 2, "Kagebunshin", 8).
+special_attack(3, 3, "Silent kill", 20).
+special_attack(4, 4, "Shutdown", 12).
 
-new_max_hp(LEVEL, BEFORE, NEW_MAX) :-
-    X1 is 2 * BEFORE,
-    X2 is X1 * LEVEL,
-    X3 is 100 + LEVEL + 10,
-    NEW_MAX is ceiling(X2 // X3).   
+update_exp(After) :-
+    retractall(char_exp(_)),
+    assertz(char_exp(After)).
 
-new_max_stats(LEVEL, BEFORE, NEW_MAX) :-
-    X1 is 2 * BEFORE,
-    X2 is X1 * LEVEL,
-    NEW_MAX is ceiling(X2 // 105).
+update_max_exp(After) :-
+    retractall(char_maxexp(_)),
+    assertz(char_maxexp(After)).
 
-/* Leveling up stats */
-level_up_exp(LEVEL) :-
-    char_exp(EXP_BEFORE),
-    char_maxexp(MAX_EXP_BEFORE),
-    EXP_NOW is MAX_EXP_BEFORE - EXP_BEFORE,
-    retract(char_exp(EXP_BEFORE)),
-    assertz(char_exp(MAX_EXP_BEFORE)),
-    new_max_exp(LEVEL, NEW_MAX),
-    retract(char_maxexp(MAX_EXP_BEFORE)),
-    assertz(char_maxexp(NEW_MAX)).
+update_max_hp(After) :-
+    retractall(char_maxhp(_)),
+    assertz(char_maxhp(After)).
 
-level_up_hp(LEVEL) :-
-    char_maxhp(MAX_HP_BEFORE),
-    new_max_hp(LEVEL, MAX_HP_BEFORE, NEW_MAX_HP),
-    retract(char_maxhp(MAX_HP_BEFORE)),
-    assertz(char_maxhp(NEW_MAX_HP)),
-    retractall(char_hp(HP_BEFORE)),
-    assertz(char_hp(NEW_MAX_HP)).
+update_hp(After) :-
+    retractall(char_hp(_)),
+    assertz(char_hp(After)).
 
-level_up_att(LEVEL) :-
-    char_attack(ATT_BEFORE),
-    new_max_stats(LEVEL, ATT_BEFORE, NEW_ATT),
-    retract(char_attack(ATT_BEFORE)),
-    assertz(char_atack(NEW_ATT)).
+update_attack(After) :-
+    retractall(char_attack(_)),
+    assertz(char_attack(After)).
 
-level_up_def(LEVEL) :-
-    char_defense(DEF_BEFORE),
-    new_max_stats(LEVEL, DEF_BEFORE, NEW_DEF),
-    retract(char_defense(DEF_BEFORE)),
-    assertz(char_attack(NEW_DEF)).
+update_defense(After) :-
+    retractall(char_defense(_)),
+    assertz(char_defense(After)).
 
 /* Precondition: exp >= max exp */
 level_up :-
@@ -80,25 +64,31 @@ level_up :-
     level_up_def(LEVEL_NOW),
     msg_level_up(MSG),
     write(MSG).
+
+/* Leveling up stats */
+level_up_exp(Level) :-
+    char_exp(NowExp), char_maxexp(NowMaxExp), NextExp is NowMaxExp - NowExp,
+    update_exp(NextExp),
+    calc_max_exp(Level, NextMaxExp), update_max_exp(NextMaxExp).
+
+level_up_hp(Level) :-
+    char_maxhp(NowMaxHp), calc_max_hp(Level, NowMaxHp, NextMaxHp),
+    update_max_hp(NextMaxHp), update_hp(NextMaxHp).
+
+level_up_atk(Level) :-
+    char_attack(NowStats), calc_max_stats(Level, NowStats, NextStats),
+    update_attack(NextStats).
+
+level_up_def(Level) :-
+    char_defense(NowStats), calc_max_stats(Level, NowStats, NextStats),
+    update_defense(NextStats).
+
 show_status :- 
-    write("Job : "),
-    write(char_job),nl,
-    write("Level : "),
-    write(char_level),nl,
-    write("Health : "),
-    write(char_hp),
-    write("/"),
-    write(char_maxhp),nl,
-    write("Attack : "),
-    Attnew is char_attack + weapon,
-    write(Attnew),nl,
-    write("Defense : "),
-    write(char_defense),nl,
-    write("Exp : "),
-    write(char_exp),
-    write("/"),
-    write(char_maxexp),nl,
-    write("Gold : ").
-    write(char_gold),nl.
-/* ni belom ada? */
-pay_potion(Y, ID_Chosen).
+    write("Job : "), write(char_job), nl,
+    write("Level : "), write(char_level), nl,
+    write("Health : "), write(char_hp), write("/"),
+    write(char_maxhp), nl,
+    write("Attack : "), Attnew is char_attack + weapon, write(Attnew), nl,
+    write("Defense : "), write(char_defense), nl,
+    write("Exp : "), write(char_exp), write("/"), write(char_maxexp), nl,
+    write("Gold : "), write(char_gold), nl.

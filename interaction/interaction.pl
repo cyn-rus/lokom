@@ -35,3 +35,24 @@ dungeon :-
     game_start(false),
     msg_game_not_started(MSG),
     write(MSG), !.
+
+quest :-
+    game_start(true),
+    in_battle(false),
+    isNear("Q"),
+    acc_quest, !.
+
+quest :-
+    game_start(true),
+    in_battle(true),
+    msg_in_battle(MSG), write(MSG), !.
+
+quest :-
+    game_start(true),
+    (\+ isNear("Q")),
+    msg_quest_not_near(MSG), write(MSG), !.
+
+quest :-
+    game_start(false),
+    msg_game_not_started(MSG),
+    write(MSG), !.

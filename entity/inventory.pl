@@ -6,45 +6,19 @@
 :- dynamic(inventory/2).
 :- dynamic(gold/1).
 :- dynamic(char_weapon/1).
-
-/* Inventory Operations */
-
-count_elmt([], 0).
-
-count_elmt([_|T], X) :-
-    count_elmt(T, N),
-    X is N+1.
-
-is_member(A, [B|_]) :-
-    A =:= B.
-
-is_member(A, [B|C]) :-
-    A \== B,
-    is_member(A, C).
-
-add_elmt(X, L, [X|L]).
-
-/* Extra functions */
-
-/* Delete Specific Element --> del_elmt(ToDelete, List, Result) */
-del_elmt(_, [], []).
-
-del_elmt(Elmt, [Elmt|Tail], Tail).
-
-del_elmt(Elmt, [Head|Tail], [Head|Result]) :-
-    del_elmt(Elmt, Tail, Result).
+:- dynamic(char_armor/1).
 
 /* Print List */
 
 print_inventory :-
     inventory([], _),
-    write('Nothing to see here. Move along.').
+    msg_invent_empty, !.
 
 print_inventory :-
     inventory(List, _),
-    write('Your current items:'), nl,
+    msg_invent_notempty, nl,
     print_list(List), nl,
-    write('Type \'remove(Item)\' to remove an item.'), !.
+    msg_invent_command, !.
 
 print_list([]).
 
@@ -64,8 +38,26 @@ print_list([H|T]) :-
 
 inventory :-
     print_inventory.
-selected(item) :- 
-    inventory().
+
+add_inventory(Elmt) :-
+    inventory(List, NbElmt),
+    retractall(inventory(_,_)),
+    add_elmt(List, Elmt, NewList),
+    NbElmtNew is NbElmt+1,
+    asserta(inventory(NewList,NbElmtNew)).
+
+select_weapon :-
+    inventory,
+    msg_select_command, nl.
+/* changed back open_inventory/0 into inventory/0 */
+
+selects(X) :- 
+    in_battle(false), !,
+    inventory(List, _),
+    is_member(X, List),
+    retract(char_weapon(_)),
+    asserta(char_weapon(X)).
+
 remove(Item) :-
     inventory(List, Max),
     potion(ID, Item, _, _, _),
@@ -87,9 +79,9 @@ remove(Item) :-
     message_remove_success(Item), !.
 
 remove(Item) :-
-    inventory(List, Max),
+    inventory(List, _),
     \+ is_member(Item, List),
-    message_remove_fail(Msg), write(Msg), !.
+    message_remove_fail, !.
 
 /* Gold Operations */
 gold_enough(X) :-
