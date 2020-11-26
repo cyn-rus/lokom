@@ -5,14 +5,25 @@ msg_move("W", "You moved north.").
 msg_move("S", "You moved south.").
 msg_move("A", "You moved west.").
 msg_move("D", "You moved east.").
+msg_teleport(X, Y) :-
+    write("You teleported to <"), write(X), write(","), write(Y), write(">."), nl.
 msg_in_battle("You can't do that. You are in battle.").
 msg_level_up("Congratulations, you've leveled up!").
+msg_get_exp(Exp) :-
+	write("You got "),
+	write(Exp),
+	write(" Exp! ").
+msg_get_gold(Gold, Total) :-
+	write("You got "),
+	write(Gold),
+	write(" Gold! Your total Gold is "),
+	write(Total).
 
 /* Store Messages */
 msg_store_not_near("You can't open store here.").
 msg_store_inventory_full("Inventory full. Please remove an item before you proceed.").
 msg_store_gold_not_enough("Gold not enough. Go kill some enemies or clear some quests.").
-msg_store_welcome("Welcome to SimpaeTu\'s Store, you need it, we got it.", "Use \'gacha\' to get weapons (100 Gold).", "Use \'buy\' to buy potions.", "Use \'quit\' to go back to your adventure!").
+msg_store_welcome("Welcome to SimpaeTu\'s Store, you need it, we got it.", "Use \'gacha\' to get weapons (100 Gold).", "Use \'buy\' to buy potions.", "Move to quit the store.").
 msg_gacha_get("Congratulations! You got: ").
 msg_store_after_buy("Thank you for purchasing!").
 msg_store_potions("Type the potion's number or use \'back\' to go back to main store.").
@@ -28,6 +39,11 @@ msg_dungeon_not_near("You can't open dungeon here.").
 /* Quest Messages */
 msg_quest_not_near("You can't accept quest here.").
 msg_quest_choose("Type the quest's number or move to not accept.").
+msg_quest_in_quest("Oops, it looks like there was a wrong input or you've accepted a quest, go finish the quest first.").
+msg_quest_not_in_quest("Well, you don't have any ongoing quest, go to \'Q\' and type \'quest.\' to accept one.").
+msg_quest_finish("Congratz, you've finished your quest").
+msg_quest_took_quest(Name) :-
+	write("You've just taken "), write(Name), write(" quest. Good luck!").
 
 /* Inventory Messages */
 msg_invent_empty :-
@@ -61,10 +77,11 @@ show_help :-
 	write("a.			   : move west"), nl,
 	write("s.			   : move south"), nl,
 	write("d.              : move east"), nl,
-	write("inventory.      : open inventory"), nl,
+	write("open_inventory  : see inventory items"), nl,
     write("store.          : enter store (must be standing near store)"), nl,
     write("dungeon.        : enter dungeon (must be standing near dungeon)"), nl,
 	write("quest.		   : accept a quest (must be standing near quest or not taking any)"), nl,
+	write("current_quest.  : see progress of ongoing quest"), nl,
 	write("help.           : show available commands"), nl,
 	write("quit.           : quit the game"), nl.
     /* Tambah seperlunya. */
@@ -117,3 +134,7 @@ msg_enemy_death :-
 	write("ggwp ezpz"), nl.
 msg_enemy_found :-
     write("You found an enemy."), nl.
+
+msg_pick_job :-
+    write("Welcome to Mana Sempat Keburu Telat!"), nl,
+    write("Choose your job"), nl.

@@ -47,3 +47,22 @@ d :-
     
 d :- game_start(false), msg_game_not_started(MSG), write(MSG), !.
 d :- in_battle(true), msg_in_battle(MSG), write(MSG), !.
+
+teleport :-
+    game_start(true), in_battle(false),
+    write("Teleporting will cost you 50 gold. Proceed?"), nl, read(Ans),
+    ((Ans = y) -> 
+    ((gold_enough(50)) -> 
+    write("Masukkan koordinat X: "), nl,
+    read(X),
+    write("Masukkan koordinat Y: "), nl,
+    read(Y),
+    map_player(P), map_object(A, B, P),
+    DX is X-A, DY is Y+B,
+    (\+ isWall(DX, DY)), isMoveable(DX, DY),
+    msg_teleport(X, Y),removeGold(50),
+    retract(map_object(_,_,P)),
+    assertz(map_object(X,Y,P)), draw_map ; msg_store_gold_not_enough(MSG), write(MSG), !) ; write("Canceled")).
+
+teleport :- game_start(false), msg_game_not_started(MSG), write(MSG), !.
+teleport :- in_battle(true), msg_in_battle(MSG), write(MSG), !.

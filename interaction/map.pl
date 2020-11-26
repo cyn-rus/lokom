@@ -87,7 +87,7 @@ draw_point(X, Y) :- map_size(S), map_nothing(N),
 					write(N), write(" "),
 					DX is X+1, draw_point(DX, Y), !.
 
-draw_point(X,Y) :- true, !.
+draw_point(_,_) :- true, !.
 
 draw_map :- draw_point(0, 0).
 

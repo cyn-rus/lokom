@@ -16,6 +16,8 @@ add_elmt(X, L, [X|L]).
 
 /* Extra functions */
 
+after([_|B], B).
+
 /* Delete Specific Element --> del_elmt(ToDelete, List, Result) */
 del_elmt(_, [], []).
 

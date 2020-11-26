@@ -1,6 +1,6 @@
 :- dynamic(in_battle/1).
 % enemy_status(Enemy_ID, Enemy_HP).
-:- dynamic(enemy_status/3).
+:- dynamic(enemy_status/2).
 % turn(Integer).
 :- dynamic(turn/1).
 % Special_Attack_Ready(Boolean)
@@ -12,7 +12,7 @@ randomize_enemy(ID) :-
 found_enemy(EnemyId) :-
     random(0,100,RandomRate),
     randomize_enemy(REnemyId),
-    ((RandomRate =< 20) ->
+    ((RandomRate =< 40) ->
         msg_enemy_found,
         print_enemy(REnemyId),EnemyId is REnemyId ; EnemyId is -1).
 
@@ -22,6 +22,10 @@ battle_init :-
         true;
         update_battle(true), update_enemy(X),
         update_state_sa(false), update_turn(0), print_battle).
+
+battle_init_boss :-
+    update_battle(true), update_enemy(999),
+    update_state_sa(false), update_turn(0), print_battle.
 
 update_battle(State) :-
     retractall(in_battle(_)),
@@ -61,18 +65,28 @@ battle_tick :-
     enemy_status(_, EHP),
     ((HP =< 0) ->
     msg_player_death,
-    update_battle(false) ; true),
+    game_over,
+    update_battle(false), ! ; true),
     ((EHP =< 0) ->
     msg_enemy_death,
-    update_battle(false) ; true).
+    enemy(_, _, _, _, _, Lvl),
+    random(4, Lvl, Exp),
+    addExp(Exp),
+    update_battle(false), ! ; true), !.
 
 enemy_attack :-
+    enemy_status(ID, EHP),
+    ((EHP >= 0) ->
     char_hp(HP), char_defense(Defense),
-    enemy_status(ID, _), enemy(ID, _, _, Atk, _, _),
+    enemy(ID, Name, _, Atk, _, _),
     calculate_damage(Atk, Defense, 0, Total),
+    write(Name),
+    write(" deal "),
+    write(Total),
+    write(" damage"),
     NextHP is HP - Total,
     update_hp(NextHP),
-    battle_tick.
+    battle_tick;!).
 
 print_battle_info :-
     in_battle(true),enemy_status(ID, HP),
@@ -84,9 +98,10 @@ print_battle :-
     msg_battle_commands.
 
 current_status :-  
-    char_weapon(Weapon), char_attack(Att),
-    Attnew is Att + Weapon,
-    write("Level : "), write(char_level), nl,
-    write("Health : "), write(char_hp), nl,
+    char_weapon(IDWeapon), char_attack(Att),
+    equipment(IDWeapon, _, Weapon, _, _),
+    Attnew is Att + Weapon, char_hp(Hp), char_level(Level), char_defense(Def),
+    write("Level : "), write(Level), nl,
+    write("Health : "), write(Hp), nl,
     write("Attack : "), write(Attnew), nl,
-    write("Defense : "), write(char_defense), nl.
+    write("Defense : "), write(Def), nl.
