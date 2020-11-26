@@ -30,7 +30,7 @@ open_inventory :-
 
 add_inventory(Elmt) :-
     inventory(List, NbElmt),
-    add_elmt(List, Elmt, NewList),
+    add_elmt(Elmt, List, NewList),
     NewNbElmt is NbElmt + 1,
     retractall(inventory(_,_)),
     asserta(inventory(NewList, NewNbElmt)).
