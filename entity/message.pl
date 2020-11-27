@@ -1,27 +1,28 @@
 /* In Game Messages */
-msg_game_not_started("Game has not started, use \'start.\' to play the game.").
-msg_crush_wall("You crush the wall.").
-msg_move("W", "You moved north.").
-msg_move("S", "You moved south.").
-msg_move("A", "You moved west.").
-msg_move("D", "You moved east.").
+msg_game_not_started("Gamenya belum dimulai, gunakan \'start.\' untuk bermain segara sebelum terlambat.").
+msg_crush_wall("Depan kamu tembok tuh :(").
+msg_move("W", "Derapkan langkah tatap ke Utara.").
+msg_move("S", "Derapkan langkah tatap ke Selatan.").
+msg_move("A", "Derapkan langkah tatap ke Barat.").
+msg_move("D", "Derapkan langkah tatap ke Timur.").
 msg_teleport(X, Y) :-
-    write("You teleported to <"), write(X), write(","), write(Y), write(">."), nl.
-msg_in_battle("You can't do that. You are in battle.").
-msg_level_up("Congratulations, you've leveled up!").
+    write("BOOM! Sudah teleport ke <"), write(X), write(","), write(Y), write(">."), nl.
+msg_in_battle("Mana sempat, depan kamu ada musuh >:(").
+msg_level_up("Hooray, sudah level up!").
 msg_get_exp(Exp) :-
-	write("You got "),
+	write("Kamu mendapatkan "),
 	write(Exp),
 	write(" Exp! ").
 msg_get_gold(Gold, Total) :-
-	write("You got "),
+	write("Kamu mendapatkan "),
 	write(Gold),
-	write(" Gold! Your total Gold is "),
+	write(" Gold! Total Gold yang dimiliki adalah "),
 	write(Total).
 
 /* Store Messages */
-msg_store_not_near("You can't open store here.").
-msg_store_inventory_full("Inventory full. Please remove an item before you proceed.").
+msg_store_not_near("Hei, tidak ada toko di sekitar kamu!").
+msg_store_inventory_full("Mana sempat, Inventory sudah penuh. 
+Inventory full. Please remove an item before you proceed.").
 msg_store_gold_not_enough("Gold not enough. Go kill some enemies or clear some quests.").
 msg_store_welcome("Welcome to SimpaeTu\'s Store, you need it, we got it.", "Use \'gacha\' to get weapons (100 Gold).", "Use \'buy\' to buy potions.", "Move to quit the store.").
 msg_gacha_get("Congratulations! You got: ").
@@ -56,10 +57,10 @@ msg_invent_command :-
 msg_remove_success(Item) :-
 	write("You\'ve successfully removed "),
 	write(Item),
-	write(" from your inventory.").
+	write(" from your inventory."), nl.
 
 msg_remove_fail :-
-	write("There's no such item.").
+	write("There's no such item."), nl.
 
 msg_select_command :-
 	write("Select one weapon by typing this \'selects(your weapon)\' command").
@@ -138,3 +139,16 @@ msg_enemy_found :-
 msg_pick_job :-
     write("Welcome to Mana Sempat Keburu Telat!"), nl,
     write("Choose your job"), nl.
+
+/* Credits yay! */
+
+show_credits :-
+	write("This game is made for Tubes IF2121 Logika Komputasional by:"), nl,
+	write("-----------------------------------------------------------"), nl,
+	write("                13519002    Steven Nataniel                "), nl,
+	write("                13519089    Marcello Faria                 "), nl,
+	write("                13519118    Cynthia Rusadi                 "), nl,
+	write("                13519134    Frederic Ronaldi               "), nl,
+	write("                13519166    Karina Imani                   "), nl,
+	write("-----------------------------------------------------------"), nl,
+	write("                            FIN                            "), nl.

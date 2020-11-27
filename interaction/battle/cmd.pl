@@ -52,14 +52,36 @@ special :-
     in_battle(false),
     msg_not_in_battle, !.
 
-% use_potion :- 
-    % in_battle(true),
-    % inventory(_, NbElmt),
-    % NbElmt =:= 0,
-    % write('You don\'t have any potions in your inventory'), nl.
-    
+use_potion :- 
+    in_battle(true),
+    inventory(List, _),
+    \+ is_member(-1, List),
+    \+ is_member(-2, List),
+    \+ is_member(-3, List),
+    \+ is_member(-4, List),
+    \+ is_member(-5, List),
+    \+ is_member(-6, List),
+    write("You don\'t have any potions in your inventory."), nl, !.
+ 
 use_potion :-
     in_battle(true),
-    write('Select your potions: '),
+    write("Select your potions: \n"),
     inventory(X, _),
-    print_potion(X).
+    print_potion(X),
+    read(Name),
+    potion(ID, Name, Atk, Def, Hp, _),
+    is_member(ID, X), !,
+    remove(Name),
+    write('You used '), write(Name), nl,
+    ((Atk > 0) ->
+    write('You gained '), write(Atk), write(' Atk!'), nl, 
+    char_attack(CurAtk), NewAtk is CurAtk + Atk, update_attack(NewAtk) ; true),
+    ((Def > 0) ->
+    write('You gained '), write(Def), write(' Def!'), nl,
+    char_defense(CurDef), NewDef is CurDef + Def, update_defense(NewDef) ; true ),
+    ((Hp > 0) ->
+    write('You gained '), write(Hp), write(' HP!'), nl,
+    char_hp(CurHp), char_maxhp(MaxHp), NewHp is CurHp + Hp,
+    ((NewHp > MaxHp) -> update_hp(MaxHp) ; update_hp(NewHp)), ! ; true), !.
+    
+    

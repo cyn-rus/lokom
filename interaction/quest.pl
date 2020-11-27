@@ -1,16 +1,11 @@
 /* Fakta mengenai setiap quest, berapa enemy yang harus dikalahkan dan apa bountynya */
 
-:- include("../entity/enemy.pl").
-:- include("../entity/character.pl").
-:- include("../entity/inventory.pl").
-:- include("../entity/message.pl").
-
 /* Dynamic predicates */
-:- dynamic(current_quest/2).
+:- dynamic(curr_quest/2).
 :- dynamic(is_in_quest/1).
+:- dynamic(current_temp/1).
 
 is_in_quest(false).
-game_start(true).
 
 /* Quest */
 /* Format: Number, ID, kill, ID kill, ...., Gold, Exp */
@@ -49,7 +44,7 @@ print_quest(Num) :-
 
 print_curr_quest(Name) :-
     write("Quest Name: "), write(Name), nl,
-    current_quest(Name, Enemy),
+    curr_quest(Name, Enemy),
     write("Enemies left"), nl,
     print_quest_enemy(Enemy).
 
@@ -58,8 +53,9 @@ choose_quest(Num) :-
     retract(is_in_quest(false)),
     asserta(is_in_quest(true)),
     quest(Num, Name, Arr, _, _),
-    asserta(current_quest(Name, Arr)),
-    msg_quest_took_quest(Name), nl, nl, map.
+    asserta(curr_quest(Name, Arr)),
+    msg_quest_took_quest(Name), nl, nl.
+    /*, map*/
 
 acc_quest :-
     is_in_quest(false),
@@ -79,9 +75,9 @@ acc_quest :-
 cleared_quest :-
     retract(is_in_quest(true)),
     asserta(is_in_quest(false)),
-    current_quest(Name, _),
+    curr_quest(Name, _),
     quest(_, Name, _, Gold, Exp),
-    retractall(current_quest(_, _)),
+    retractall(curr_quest(_, _)),
     msg_quest_finish(MSG), write(MSG), nl,
     addExp(Exp),
     addGold(Gold).
@@ -89,7 +85,7 @@ cleared_quest :-
 current_quest :-
     game_start(true),
     is_in_quest(true),
-    current_quest(Name, _),
+    curr_quest(Name, _),
     print_curr_quest(Name), !.
 
 current_quest :-
@@ -102,34 +98,54 @@ current_quest :-
     msg_game_not_started(MSG), write(MSG), nl.
 
 /* Functions after battle */
-is_quest_finish([], _).
-is_quest_finish([A|B], X) :-
-    add_elmt(A, X, New_list),
-    ((B = 0 -> (after(B, After_B), is_quest_finish(After_B, New_list)));
-    !).
+is_quest_finish_enemy([A|B]) :-
+    (A = 0 -> is_quest_finish(B)), !.
 
-enemy_decrease([Kill|_], X, After_add) :-
-    New_kill is Kill-1,
-    add_elmt(New_kill, X, After_add).
+is_quest_finish([]).
+is_quest_finish([_|B]) :-
+    is_quest_finish_enemy(B).
 
-move_to_new_list(_, [], _).
-move_to_new_list(ID, [A|B], X) :-
-    add_elmt(A, X, After_add),
-    (ID = A -> (enemy_decrease(B, After_add, New_arr),
-    after(B, After_B), move_to_new_list(ID, After_B, New_arr));
-    (move_to_new_list(ID, B, After_add))).
+is_kill_zero(N) :-
+    N =:= 0.
 
-reduce_enemy(ID) :-
-    current_quest(ID, Enemy),
-    move_to_new_list(ID, Enemy, After_reduce),
-    retract(ID, Enemy),
-    asserta(ID, After_reduce),
-    (is_quest_finish(After_reduce, []) -> (cleared_quest);
-    (curret_quest)).
+/* list itu isinya dari yg sebelumnya, X itu list yang habis diappend sblmnya, after_add newest list*/
+enemy_decrease([Kill|_]) :-
+    current_temp(X),
+    (\+ is_kill_zero(Kill) -> (New_kill is Kill-1, add_after_elmt(X, New_kill, After_add), 
+                               retractall(current_temp(_)), asserta(current_temp(After_add)))), !.
+
+/* ceritanya dia mau ngurangin enemy yg udah dibunuh, nanti return list yang enemy udah kebunuh */
+/* ID itu id enemy, [A|B] itu list lama */
+move_to_new_list_enemy(ID, [A|B]) :-
+    current_temp(Arr),
+    add_after_elmt(Arr, A, New_arr),
+    retractall(current_temp(_)),
+    asserta(current_temp(New_arr)),
+    move_to_new_list(ID, B).
+
+move_to_new_list(_, []).
+move_to_new_list(ID, [A|B]) :-
+    current_temp(Arr),
+    add_after_elmt(Arr, A, New_arr),
+    retractall(current_temp(_)),
+    asserta(current_temp(New_arr)),
+    (ID = A -> (enemy_decrease(B), after(B, After_B), move_to_new_list(ID, After_B)) ;
+    move_to_new_list_enemy(ID, B)).
+
+reduce_enemy(ID):-
+    curr_quest(Name, Enemy),
+    move_to_new_list(ID, Enemy),
+    current_temp(After_reduce),
+    retractall(curr_quest(_, _)),
+    asserta(curr_quest(Name, After_reduce)),
+    retractall(current_temp(_)),
+    (is_quest_finish(After_reduce) -> (cleared_quest);
+    (current_quest)).
 
 /* Let's use this func in battle */
 is_enemy_in_quest(Id) :-
+    asserta(current_temp([])),
     is_in_quest(true),
-    current_quest(_, Arr),
-    (is_member(Id, Arr) -> reduce_enemy(Id)), !.
+    curr_quest(_, Arr),
+    (is_member(Id, Arr) -> (reduce_enemy(Id))), !.
 is_enemy_in_quest(_).

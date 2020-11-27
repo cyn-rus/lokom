@@ -37,10 +37,10 @@ init_character(ID) :-
 
 /* Job */
 /* Format: ID, Name, HP, Att, Def, Starter weapon */
-job(0, "Swordman", 300, 4, 5, "sword").
-job(1, "Archer", 20, 6, 4, "bow").
-job(2, "Sorcerer", 15, 7, 4, "staff").
-job(3 , "Assassin", 25, 5, 3, "dagger").
+job(0, "Swordman", 60, 22, 5, "sword").
+job(1, "Archer", 45, 30, 4, "bow").
+job(2, "Sorcerer", 52, 24, 14, "staff").
+job(3 , "Assassin", 55, 26, 10, "dagger").
 job(4, "Cheater", 99, 99, 99, "buffer overflow").
 
 /* Special attack */
@@ -127,9 +127,9 @@ show_status :-
     write("Gold : "), write(Gold), nl.
 
 addExp(Add) :-
+    msg_get_exp(Add),
     char_exp(Exp_before),
     Exp_new is Exp_before + Add,
-    msg_get_exp(Add),
     update_exp(Exp_new),
     char_maxexp(MaxExp),
     ((Exp_new >= MaxExp) -> level_up, ! ; true).

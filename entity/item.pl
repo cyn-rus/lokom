@@ -3,15 +3,15 @@
 /* Equipments */
 /* Format: ID, Name, att, def, HP */
 equipment(999, "Nothing", 0, 0, 0).
-equipment(0, "He em Sword", 3, 0, 0). 
-equipment(1, "Manna Bow", 5, 0, 0).
-equipment(2, "Silicon Staff", 7, 0, 0).
-equipment(3, "Fesh Dagger", 8, 0, 0).
-equipment(4, "Stack Overflow", 99, 99, 99).
-equipment(5, "Nomiap Armor", 0, 5, 0).
-equipment(6, "Saiacan Icant Armor", 0, 7, 3).
-equipment(7, "Teesllat Headband", 2, 4, 3).
-equipment(8, "Cabooru Necklace", 3, 7, 6).
+equipment(0, "He_em_Sword", 3, 0, 0). 
+equipment(1, "Manna_Bow", 5, 0, 0).
+equipment(2, "Silicon_Staff", 7, 0, 0).
+equipment(3, "Fesh_Dagger", 8, 0, 0).
+equipment(4, "Stack_Overflow", 99, 99, 99).
+equipment(5, "Nomiap_Armor", 0, 5, 0).
+equipment(6, "Saiacan_Icant_Armor", 0, 7, 3).
+equipment(7, "Teesllat_Headband", 2, 4, 3).
+equipment(8, "Cabooru_Necklace", 3, 7, 6).
 idx_maxequipment(9).
 
 /* Facts for weapons */
@@ -32,10 +32,10 @@ accessories(8).
 /* Potions */
 /* Format: ID, Name, att, def, HP, price */
 potion(-1, "Yuk", 0, 0, 5, 5).
-potion(-2, "Bisa Yucc", 0, 2, 4, 7).
+potion(-2, "Bisa_Yucc", 0, 2, 4, 7).
 potion(-3, "IF2121", 5, 5, 0, 14).
 potion(-4, "Assembly", 7, 2, 3, 18).
-potion(-5, "Emergency Food", 2, 10, 10, 25).
+potion(-5, "Emergency_Food", 2, 10, 10, 25).
 potion(-6, "Childe", 10, 10, 10, 30).
 
 item_print(NAME, ATK, DEF, HP) :-
