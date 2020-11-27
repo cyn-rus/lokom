@@ -80,9 +80,10 @@ battle_tick :-
 enemy_attack :-
     enemy_status(ID, EHP),
     ((EHP >= 0) ->
-    char_hp(HP), char_defense(Defense),
+    char_hp(HP), char_defense(Defense), char_armor(Arm),
+    DefT is Defense + Arm,
     enemy(ID, Name, _, Atk, _, _),
-    calculate_damage(Atk, Defense, 0, Total),
+    calculate_damage(Atk, DefT, 0, Total),
     write(Name),
     write(" deal "),
     write(Total),
@@ -99,12 +100,3 @@ print_battle_info :-
 print_battle :-
     msg_ask_what_to_do,
     msg_battle_commands.
-
-current_status :-  
-    char_weapon(IDWeapon), char_attack(Att),
-    equipment(IDWeapon, _, Weapon, _, _),
-    Attnew is Att + Weapon, char_hp(Hp), char_level(Level), char_defense(Def),
-    write("Level : "), write(Level), nl,
-    write("Health : "), write(Hp), nl,
-    write("Attack : "), write(Attnew), nl,
-    write("Defense : "), write(Def), nl.

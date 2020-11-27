@@ -50,7 +50,7 @@ d :- in_battle(true), msg_in_battle(MSG), write(MSG), !.
 
 teleport :-
     game_start(true), in_battle(false),
-    write("Teleporting will cost you 50 gold. Proceed?"), nl, read(Ans),
+    write("Teleporting will cost you 50 gold. Proceed? (y/n)"), nl, read(Ans),
     ((Ans = y) -> 
     ((gold_enough(50)) -> 
     write("Masukkan koordinat X: "), nl,

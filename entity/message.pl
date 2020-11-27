@@ -80,7 +80,7 @@ show_help :-
 	write("open_inventory  : cek inventory"), nl,
     write("store.          : masuk ke dalam toko (harus berada di dekat \'S\')"), nl,
     write("dungeon.        : masuk ke dalam dungeon (harus berada di dekat \'D\')"), nl,
-	write("quest.		   : terima quest (harus berada di dekat \'Q\' atau tidak ada quest yang aktif)"), nl,
+	write("quest.		: terima quest (harus berada di dekat \'Q\' atau tidak ada quest yang aktif)"), nl,
 	write("current_quest.  : cek progres quest yang sedang aktif"), nl,
 	write("help.           : lupa commandnya apa aja? Ketik ini aja"), nl,
 	write("quit.           : keluar dari game :("), nl.

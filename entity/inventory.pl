@@ -8,16 +8,26 @@
 
 /* Print List */
 
+print_category(X) :-
+    weapon(X), write(" | Weapon"), !.
+print_category(X) :-
+    armor(X), write(" | Armor"), !.
+print_category(X) :-
+    accessories(X), write(" | Accessories"), !.
+print_category(_) :-
+    write(" | Unknown"), !.
+
 print_list([H|T]) :-
     potion(H, Name, _, _, _, _),
     write('  - '),
-    write(Name), nl,
+    write(Name),
+    write(" | Potion"), nl,
     print_list(T).
 
 print_list([H|T]) :-
     equipment(H, Name, _, _, _),
     write('  - '),
-    write(Name), nl,
+    write(Name), print_category(H), nl,
     print_list(T).
 
 print_list([]).
@@ -25,7 +35,8 @@ print_list([]).
 print_potion([H|T]) :-
     potion(H, Name, _, _, _, _),
     write('  - '),
-    write(Name), nl,
+    write(Name),
+    write(" | Potion"), nl,
     print_potion(T).
 
 print_potion([H|T]) :-
@@ -66,26 +77,60 @@ add_inventory(Elmt) :-
 
 select_weapon :-
     open_inventory,
-    msg_select_command, nl,
-    inventory(_, NbElmt), 
-    NbElmt =:= 0, !, 
     inventory(_, Y),
     ((Y > 0) ->
-    write("Masukkan nama Barang menggunakan \" untuk mengequip item: "),
+    msg_select_command, nl,
+    write("Masukkan nama Weapon dengan menyertakan \" diantara nama item untuk mengequip item: "),
     read(X), 
-    selects(X) ; true).
+    select_weapon_x(X) ; true).
 
-selects(X) :- 
+select_armor :-
+    open_inventory,
+    inventory(_, Y),
+    ((Y > 0) ->
+    msg_select_command, nl,
+    write("Masukkan nama Armor dengan menyertakan \" diantara nama item untuk mengequip item: "),
+    read(X), 
+    select_armor_x(X) ; true).
+
+select_accessories :-
+    open_inventory,
+    inventory(_, Y),
+    ((Y > 0) ->
+    msg_select_command, nl,
+    write("Masukkan nama Accessories dengan menyertakan \" diantara nama item untuk mengequip item: "),
+    read(X), 
+    select_accessories_x(X) ; true).
+
+select_weapon_x(X) :- 
     in_battle(false), !,
     inventory(List, _),
+    ((weapon(X)) -> 
     (equipment(Y, X, _, _, _) -> 
     (is_member(Y, List) -> 
     retractall(char_weapon(_)),
     asserta(char_weapon(Y)) ; msg_remove_fail);
-    msg_remove_fail).
+    msg_remove_fail) ; write("That item is not a weapon.")).
 
-select_armor :-
-    select_weapon.
+select_accessories_x(X) :- 
+    in_battle(false), !,
+    inventory(List, _),
+    ((accessories(X)) -> 
+    (equipment(Y, X, _, _, _) -> 
+    (is_member(Y, List) -> 
+    retractall(char_accessories(_)),
+    asserta(char_accessories(Y)) ; msg_remove_fail);
+    msg_remove_fail) ; write("That item is not an accessories.")).
+
+select_armor_x(X) :- 
+    in_battle(false), !,
+    inventory(List, _),
+    ((armor(X)) -> 
+    (equipment(Y, X, _, _, _) -> 
+    (is_member(Y, List) -> 
+    retractall(char_armor(_)),
+    asserta(char_armor(Y)) ; msg_remove_fail);
+    msg_remove_fail) ; write("That item is not an armor.")).
 
 remove(Item) :-
     inventory(List, NbElmt),

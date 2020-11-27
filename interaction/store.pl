@@ -18,7 +18,7 @@ open_store :-
     (Param = a -> a);
     (Param = s -> s);
     (Param = d -> d))), !,
-    msg_store_wrong_param(MSG5), write(MSG5), nl, nl, open_store.
+    nl, nl, open_store.
 
 /* Gacha yoohoo */
 /* Case: inventory not full, gold enough */

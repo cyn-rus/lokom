@@ -13,6 +13,7 @@
 :- dynamic(char_level/1).
 :- dynamic(char_weapon/1).
 :- dynamic(char_armor/1).
+:- dynamic(char_accessories/1).
 
 pick_job :-
     msg_pick_job,
@@ -32,7 +33,7 @@ init_character(ID) :-
     assertz(char_level(1)), assertz(char_exp(0)), assertz(char_job(ID)),
     assertz(char_maxhp(HP)), assertz(char_hp(HP)), assertz(char_maxexp(MaxExp)),
     assertz(char_attack(Atk)), assertz(char_defense(Def)),
-    assertz(char_weapon(999)), assertz(char_armor(999)),
+    assertz(char_weapon(999)), assertz(char_armor(999)), assertz(char_accessories(999)),
     write("You choose "), write(Name), write(", let\'s explore the world"), nl.
 
 /* Job */
@@ -119,14 +120,17 @@ show_status :-
     char_maxhp(Maxhp),
     write(Maxhp), nl,
     write("Attack : "), char_attack(Atk), char_weapon(IDWeapon), 
-    equipment(IDWeapon, _, Weapon, _, _),
+    equipment(IDWeapon, WName, Weapon, _, _),
     AtkT is Atk + Weapon, write(AtkT), nl,
-    char_defense(Def),
-    write("Defense : "), write(Def), nl,
+    char_armor(IDArmor), equipment(IDArmor, AName, _, Armor, _),
+    char_defense(Def), DefT is Def + Armor,
+    write("Defense : "), write(DefT), nl,
     char_exp(Exp),
     write("Exp : "), write(Exp), write("/") ,char_maxexp(Maxexp) ,write(Maxexp), nl,
     gold(Gold),
-    write("Gold : "), write(Gold), nl.
+    write("Gold : "), write(Gold), nl,
+    write("Weapon : "), write(WName),
+    write("Armor : "), write(AName).
 
 addExp(Add) :-
     msg_get_exp(Add),
