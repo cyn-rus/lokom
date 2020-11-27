@@ -58,7 +58,7 @@ teleport :-
     write("Masukkan koordinat Y: "), nl,
     read(Y),
     map_player(P), map_object(A, B, P),
-    DX is X-A, DY is Y+B,
+    DX is X-A, DY is Y-B,
     (\+ isWall(DX, DY)), isMoveable(DX, DY),
     msg_teleport(X, Y),removeGold(50),
     retract(map_object(_,_,P)),

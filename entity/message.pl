@@ -54,9 +54,9 @@ msg_invent_command :-
 	write("Mau buang barang ga berguna? Ketik aja \'remove(Item).\', \'Item\' yang dimaksud ini nama barangnya yaaa :3 pake kutip \" jangan lupa"), nl.
 
 msg_remove_success(Item) :-
-	write("Cieeee, ada yang berhasil buang "), nl,
+	write("Cieeee, ada yang berhasil buang "),
 	write(Item),
-	write(" dari inventronya nich."), nl.
+	write(" dari inventornya nich."), nl.
 
 msg_remove_fail :-
 	write("Mana ada barang itu!"), nl.
@@ -73,6 +73,7 @@ show_help :-
 	write("||save(Filename).     : save game"), nl,
 	write("||show_status.        : lihat status kamu, single </3"), nl,
 	write("||map.                : kepo mau liat map"), nl,
+	write("||teleport.           : memasukkan koordinat X dan Y"), nl,
 	write("||w.    				 : derapkan langkah tatap ke Utara"), nl,
 	write("||a.	    	   		 : derapkan langkah tatap ke Barat"), nl,                                 
 	write("||s.	   				 : derapkan langkah tatap ke Selatan"), nl,
@@ -96,7 +97,7 @@ msg_ask_what_to_do :-
 	write("Hayo, mau ngapain?"), nl.
 
 msg_battle_commands :-
-	write("Ketik \'attack.\' atau \'special.\' atau \'do_nothing_if_you_mager_and_mau_bobo_aja.\' atau \'run.\'?"), nl.
+	write("Ketik \'attack.\' atau \'special.\' atau \'run.\'?"), nl.
 
 msg_attack(Damage) :-
 	write("Wah ketjeh banget, kamu barusan hantam dengan kekuatan "), write(Damage), write("."), nl.
@@ -121,13 +122,13 @@ msg_enemy_hp(Enemyid, Enemyhealth) :-
 	write(Enemyname),write("\'s HP : "), write(Enemyhealth), write("/"), write(Enemymaxhp), nl.
 
 msg_player_hp :-
-	char_hp(hp),
-	char_maxhp(maxhp),
-	write("Player HP : "), write(hp), write("/"), write(maxhp), nl.
+	char_hp(Hp),
+	char_maxhp(Maxhp),
+	write("Player HP : "), write(Hp), write("/"), write(Maxhp), nl.
 
 msg_player_level :-
-	char_level(level),
-	write("Level : "), write(level), nl.
+	char_level(Level),
+	write("Level : "), write(Level), nl.
 msg_not_in_battle("Lagi kagak battle cuy.").
 msg_run_success :-
 	write("Kaboerrrrr!"), nl.

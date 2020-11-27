@@ -2,9 +2,9 @@ battle_info :-
     in_battle(true),
     print_battle_info, print_battle.
 
-battle_status :-
-    in_battle(true),
-    current_status, print_battle.
+attack :- 
+    in_battle(false),
+    msg_not_in_battle(MSG), write(MSG), nl, !.
 
 attack :-
     in_battle(true),

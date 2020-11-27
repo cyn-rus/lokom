@@ -129,8 +129,8 @@ show_status :-
     write("Exp : "), write(Exp), write("/") ,char_maxexp(Maxexp) ,write(Maxexp), nl,
     gold(Gold),
     write("Gold : "), write(Gold), nl,
-    write("Weapon : "), write(WName),
-    write("Armor : "), write(AName),
+    write("Weapon : "), write(WName), nl,
+    write("Armor : "), write(AName), nl,
     char_accessories(Ax), equipment(Ax, AxN, _, _, _),
     write("Accessories: "), write(AxN).
 

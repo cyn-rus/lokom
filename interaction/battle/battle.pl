@@ -12,7 +12,7 @@ randomize_enemy(ID) :-
 found_enemy(EnemyId) :-
     random(0,100,RandomRate),
     randomize_enemy(REnemyId),
-    ((RandomRate =< 40) ->
+    ((RandomRate =< 30) ->
         msg_enemy_found,
         print_enemy(REnemyId),EnemyId is REnemyId ; EnemyId is -1).
 
@@ -80,7 +80,8 @@ battle_tick :-
 enemy_attack :-
     enemy_status(ID, EHP),
     ((EHP >= 0) ->
-    char_hp(HP), char_defense(Defense), char_armor(Arm),
+    char_hp(HP), char_defense(Defense), char_armor(IDArm),
+    equipment(IDArm, _, _, Arm, _),
     DefT is Defense + Arm,
     enemy(ID, Name, _, Atk, _, _),
     calculate_damage(Atk, DefT, 0, Total),

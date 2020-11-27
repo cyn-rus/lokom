@@ -3,10 +3,10 @@
 /* Equipments */
 /* Format: ID, Name, att, def, HP */
 equipment(999, "Nothing", 0, 0, 0).
-equipment(0, "He_em_Sword", 13, 0, 0). 
-equipment(1, "Manna_Bow", 15, 0, 0).
-equipment(2, "Sempat_Staff", 17, 0, 0).
-equipment(3, "Fesh_Dagger", 18, 0, 0).
+equipment(0, "He_em", 13, 0, 0). 
+equipment(1, "Manna", 15, 0, 0).
+equipment(2, "Sempat", 17, 0, 0).
+equipment(3, "Fesh", 18, 0, 0).
 equipment(4, "Stack_Overflow", 99, 99, 99).
 equipment(5, "Nomiap_Armor", 0, 15, 0).
 equipment(6, "Saiacan_Icant_Armor", 0, 17, 13).

@@ -25,7 +25,7 @@ boss_appear :-
   write('"Tadinya saya ingin turun pake tangga, tapi mana sempat lah keburu telat!", balas Bapak_Syello'), nl, nl,
   write('DUARRRR! Bapak_Syello menghancurkan tanah disekitar Syello'), nl,
   write('\"BAPAK! Kenapa menyerang bumi?!\"'), nl,
-  write('\"Gapapa, pengen aja, bosen\"'), 
+  write('\"Gapapa, pengen aja, bosen\"'), nl,
   papa_syello, nyerang_bumi, nl.
 
 boss_death :-

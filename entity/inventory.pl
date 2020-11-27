@@ -105,32 +105,35 @@ select_accessories :-
 select_weapon_x(X) :- 
     in_battle(false), !,
     inventory(List, _),
-    ((weapon(X)) -> 
     (equipment(Y, X, _, _, _) -> 
-    (is_member(Y, List) -> 
+    ((weapon(Y)) -> (is_member(Y, List) -> 
     retractall(char_weapon(_)),
-    asserta(char_weapon(Y)) ; msg_remove_fail);
-    msg_remove_fail) ; write("That item is not a weapon.")).
+    asserta(char_weapon(Y)) ; 
+    msg_remove_fail); 
+    write("That item is not a weapon."));
+    msg_remove_fail).
 
 select_accessories_x(X) :- 
     in_battle(false), !,
     inventory(List, _),
-    ((accessories(X)) -> 
     (equipment(Y, X, _, _, _) -> 
-    (is_member(Y, List) -> 
+    ((accessories(Y)) -> (is_member(Y, List) -> 
     retractall(char_accessories(_)),
-    asserta(char_accessories(Y)) ; msg_remove_fail);
-    msg_remove_fail) ; write("That item is not an accessories.")).
+    asserta(char_accessories(Y)) ; 
+    msg_remove_fail); 
+    write("That item is not a accessories."));
+    msg_remove_fail).
 
 select_armor_x(X) :- 
     in_battle(false), !,
     inventory(List, _),
-    ((armor(X)) -> 
     (equipment(Y, X, _, _, _) -> 
-    (is_member(Y, List) -> 
+    ((armor(Y)) -> (is_member(Y, List) -> 
     retractall(char_armor(_)),
-    asserta(char_armor(Y)) ; msg_remove_fail);
-    msg_remove_fail) ; write("That item is not an armor.")).
+    asserta(char_armor(Y)) ; 
+    msg_remove_fail); 
+    write("That item is not a armor."));
+    msg_remove_fail).
 
 remove(Item) :-
     inventory(List, NbElmt),
