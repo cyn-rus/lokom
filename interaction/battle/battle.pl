@@ -24,6 +24,7 @@ battle_init :-
         update_state_sa(false), update_turn(0), print_battle).
 
 battle_init_boss :-
+    boss_appear,
     update_battle(true), update_enemy(999),
     update_state_sa(false), update_turn(0), print_battle.
 
@@ -62,14 +63,14 @@ battle_tick :-
     ((X =:= 0) ->
     update_state_sa(true) ; true),
     char_hp(HP),
-    enemy_status(_, EHP),
+    enemy_status(ID, EHP),
     ((HP =< 0) ->
     msg_player_death,
     game_over,
     update_battle(false), ! ; true),
     ((EHP =< 0) ->
     msg_enemy_death,
-    enemy_status(ID, _),
+    ((ID = 999) -> boss_death ; true),
     is_enemy_in_quest(ID),
     enemy(_, _, _, _, _, Lvl),
     random(4, Lvl, Exp),
@@ -85,7 +86,7 @@ enemy_attack :-
     write(Name),
     write(" deal "),
     write(Total),
-    write(" damage"),
+    write(" damage\n"),
     NextHP is HP - Total,
     update_hp(NextHP),
     battle_tick;!).

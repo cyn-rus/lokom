@@ -1,5 +1,3 @@
-:- include('art.pl').
-
 story_intro :-
   write('Pada suatu hari, hiduplah seorang manusia yang hidup sendiri, tanpa seorang yang menemani, bernama Syello.'), nl,
   write('Ia terbangun dan tersadar bahwa ia berada di dunia lain yang tidak diketahui.'), nl,
@@ -19,7 +17,23 @@ story_intro :-
 
 boss_appear :-
   write('Syello melihat ke langit,'), nl,
+  langit, nl,
   write('Ia melihat sebuah fenomena yang tidak biasa'), nl,
-  write('"Apakah langitnya bergetar? Gempa ya?!", Syello bertanya-tanya.'), nl,
-  write('Tak lama, langit pun membalas, "Benar anakku"'), nl,
-  write('"Lohhh, Bapak?!!! Kenapa turun dari langit?"'), nl,
+  write('\"Apakah langitnya bergetar? Gempa ya?!\", Syello bertanya-tanya.'), nl,
+  write('Tak lama, langit pun membalas, \"Benar anakku\"'), nl,
+  write('\"Lohhh kok kayaknya kenal, eh, Bapak?!!! Kenapa turun dari langit?\"'), nl,
+  write('"Tadinya saya ingin turun pake tangga, tapi mana sempat lah keburu telat!", balas Bapak_Syello'), nl, nl,
+  write('DUARRRR! Bapak_Syello menghancurkan tanah disekitar Syello'), nl,
+  write('\"BAPAK! Kenapa menyerang bumi?!\"'), nl,
+  write('\"Gapapa, pengen aja, bosen\"'), 
+  papa_syello, nyerang_bumi, nl.
+
+boss_death :-
+  write('\"Adudu, ampun mas, jangan bunuh saya mas\", Bapak_Syello memohon'), nl,
+  write('\"HENTIKAN SYELLO!\", dari kejauhan Syello mendengar suara yang tak asing'), nl,
+  write('Ternyata oh ternyata, itu adalah Ibu_Syello'), nl,
+  write('\"IBU?!! Ibu kita harus membunuh ayah karena ayah sudah menyerang bumi!\",'), nl,
+  write('\"He em mana sempat\"'), nl,
+  the_end,
+  nl, nl,
+  show_credits.

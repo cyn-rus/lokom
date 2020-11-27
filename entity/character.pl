@@ -37,19 +37,19 @@ init_character(ID) :-
 
 /* Job */
 /* Format: ID, Name, HP, Att, Def, Starter weapon */
-job(0, "Swordman", 60, 22, 5, "sword").
-job(1, "Archer", 45, 30, 4, "bow").
-job(2, "Sorcerer", 52, 24, 14, "staff").
-job(3 , "Assassin", 55, 26, 10, "dagger").
+job(0, "Swordman", 60, 15, 8, "sword").
+job(1, "Archer", 45, 23, 9, "bow").
+job(2, "Sorcerer", 52, 17, 10, "staff").
+job(3 , "Assassin", 55, 19, 8, "dagger").
 job(4, "Cheater", 99, 99, 99, "buffer overflow").
 
 /* Special attack */
 /* Format: ID, job ID, special attack name, damage */
-special_attack(0, 0, "Slash of Heaven", 10).
-special_attack(1, 1, "Raining Sun", 15).
-special_attack(2, 2, "Kagebunshin", 8).
-special_attack(3, 3, "Silent kill", 20).
-special_attack(4, 4, "Shutdown", 12).
+special_attack(0, 0, "Slash of Heaven", 30).
+special_attack(1, 1, "Raining Sun", 45).
+special_attack(2, 2, "Kagebunshin", 38).
+special_attack(3, 3, "Silent kill", 40).
+special_attack(4, 4, "Shutdown", 32).
 
 update_exp(After) :-
     retractall(char_exp(_)),
@@ -78,14 +78,16 @@ update_defense(After) :-
 level_up :-
     char_level(LEVEL_BEFORE),
     LEVEL_NOW is LEVEL_BEFORE + 1,
+    msg_level_up(MSG),
+    write(MSG),
+    write(LEVEL_NOW),
+    write("!\n"),
     retract(char_level(LEVEL_BEFORE)),
     assertz(char_level(LEVEL_NOW)),
     level_up_exp(LEVEL_NOW),
     level_up_hp(LEVEL_NOW),
     level_up_atk(LEVEL_NOW),
-    level_up_def(LEVEL_NOW),
-    msg_level_up(MSG),
-    write(MSG).
+    level_up_def(LEVEL_NOW).
 
 /* Leveling up stats */
 level_up_exp(Level) :-

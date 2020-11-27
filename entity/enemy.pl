@@ -14,7 +14,7 @@ enemy(7, "AcinAsiap", 25, 20, 10, 8).
 enemy(8, "Anjayani", 26, 10, 11, 5).
 enemy(9, "TarikSis", 35, 15, 9, 8).
 enemy(10, "Semongko", 30, 12, 12, 4).
-enemy(999, "Bapak_Syello", 200, 40, 20, 10).
+enemy(999, "Bapak_Syello", 300, 70, 40, 20).
 max_enemy(11).
 
 /* Format Boss:  Name, HP, Attack, Defense, Level */

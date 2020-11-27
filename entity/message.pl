@@ -8,109 +8,108 @@ msg_move("D", "Derapkan langkah tatap ke Timur.").
 msg_teleport(X, Y) :-
     write("BOOM! Sudah teleport ke <"), write(X), write(","), write(Y), write(">."), nl.
 msg_in_battle("Mana sempat, depan kamu ada musuh >:(").
-msg_level_up("Hooray, sudah level up!").
+msg_level_up("Hooray, sudah naik ke level ").
 msg_get_exp(Exp) :-
-	write("Kamu mendapatkan "),
+	write("Cie dapat "),
 	write(Exp),
-	write(" Exp! ").
+	write(" Exp! \n").
 msg_get_gold(Gold, Total) :-
-	write("Kamu mendapatkan "),
+	write("Cie dapat "),
 	write(Gold),
 	write(" Gold! Total Gold yang dimiliki adalah "),
 	write(Total).
 
 /* Store Messages */
-msg_store_not_near("Hei, tidak ada toko di sekitar kamu!").
-msg_store_inventory_full("Mana sempat, Inventory sudah penuh. 
-Inventory full. Please remove an item before you proceed.").
-msg_store_gold_not_enough("Gold not enough. Go kill some enemies or clear some quests.").
-msg_store_welcome("Welcome to SimpaeTu\'s Store, you need it, we got it.", "Use \'gacha\' to get weapons (100 Gold).", "Use \'buy\' to buy potions.", "Move to quit the store.").
-msg_gacha_get("Congratulations! You got: ").
-msg_store_after_buy("Thank you for purchasing!").
-msg_store_potions("Type the potion's number or use \'back\' to go back to main store.").
+msg_store_not_near("Hei, tidak ada toko di sekitar kamu!!!!").
+msg_store_inventory_full("Mana sempat, Inventory sudah penuh. Kosongi dulu yuk Inventory-nya").
+msg_store_gold_not_enough("Mana sempat, Gold tidak cukup. Yuk bunuh enemy dulu atau selesaikan quest.").
+msg_store_welcome("Selamat datang di Toko SimpaeTu, you need it, we got it.", "Gunakan \'gacha.\', mungkin kamu bisa dapet SSR :3.", "Gunakan \'buy.\' untuk beli potion, tapi tidak ada ramuan cinta :(.", "Tidak mau beli atau gacha? Derapkan langkahmu!").
+msg_gacha_get("Cieee.. kamu dapet: ").
+msg_store_after_buy("Makasih udah beli di toko SimpaeTu <3").
+msg_store_potions("Diketik yuk angka dari potionnya atau kalau ga mau, ketik \'back.\' aja EHE.").
 msg_store_show_gold(Gold) :-
-	write("You have "),
+	write("Wah, kamu punya "),
 	write(Gold),
-	write(" gold"), nl.
-msg_store_wrong_param("Oops, input not valid!").
+	write(" Gold"), nl.
+msg_store_wrong_param("Punten, inputnya yang bener dong :(").
 
 /* Dungeon Messages */
-msg_dungeon_not_near("You can't open dungeon here.").
+msg_dungeon_not_near("Hei, tidak ada dungeon di sekitar kamu!!!!").
 
 /* Quest Messages */
-msg_quest_not_near("You can't accept quest here.").
-msg_quest_choose("Type the quest's number or move to not accept.").
-msg_quest_in_quest("Oops, it looks like there was a wrong input or you've accepted a quest, go finish the quest first.").
-msg_quest_not_in_quest("Well, you don't have any ongoing quest, go to \'Q\' and type \'quest.\' to accept one.").
-msg_quest_finish("Congratz, you've finished your quest").
+msg_quest_not_near("Hei, tidak ada quest di sekitar kamu!!!").
+msg_quest_choose("Diketik sekuy nomor questnya, sekalian grinding eyak, tapi kalau kamu ga mau, bisa gerak aja hehe.").
+msg_quest_in_quest("Punten, kamu antara salah masukin input atau masih ada quest, kelarin dulu lah >:(").
+msg_quest_not_in_quest("He em, emang kamu udah ambil quest? Coba ke \'Q\' terus ketik \'quest.\' deh.").
+msg_quest_finish("Cie, ada yang questnya kelar nih.").
 msg_quest_took_quest(Name) :-
-	write("You've just taken "), write(Name), write(" quest. Good luck!").
+	write("Wadadidaw, kamu ngambil quest "), write(Name), write(". Semangat ya, lup lup <3").
 
 /* Inventory Messages */
 msg_invent_empty :-
-	write("Nothing to see here. Move along.").
+	write("Heh, inventory kamu k o s o n g."), nl.
 msg_invent_notempty :-
-	write("Your current items:").
+	write("Hemmmmmmm, jadi isi inventory kamu: ").
 msg_invent_command :-
-	write("Type \'remove(Item)\' to remove an item.").
+	write("Mau buang barang ga berguna? Ketik aja \'remove(Item).\', \'Item\' yang dimaksud ini nama barangnya yaaa :3 pake kutip \" jangan lupa"), nl.
 
 msg_remove_success(Item) :-
-	write("You\'ve successfully removed "),
+	write("Cieeee, ada yang berhasil buang "), nl,
 	write(Item),
-	write(" from your inventory."), nl.
+	write(" dari inventronya nich."), nl.
 
 msg_remove_fail :-
-	write("There's no such item."), nl.
+	write("Mana ada barang itu!"), nl.
 
 msg_select_command :-
-	write("Select one weapon by typing this \'selects(your weapon)\' command").
+	write("Hayu hayu hayu, dipilih dulu salah satu weapon/armornya."),nl.
 
 /* Help Messages */
 show_help :-
     write("COMMAND LIST"), nl,
     nl,
-	write("start.          : start a new game"), nl,
-    write("load.           : load previously saved game"), nl,
-	write("save(Filename). : save your game"), nl,
-	write("status.         : show character stats"), nl,
-	write("map.            : look at the map "), nl,
-	write("w.		       : move north"), nl,
-	write("a.			   : move west"), nl,
-	write("s.			   : move south"), nl,
-	write("d.              : move east"), nl,
-	write("open_inventory  : see inventory items"), nl,
-    write("store.          : enter store (must be standing near store)"), nl,
-    write("dungeon.        : enter dungeon (must be standing near dungeon)"), nl,
-	write("quest.		   : accept a quest (must be standing near quest or not taking any)"), nl,
-	write("current_quest.  : see progress of ongoing quest"), nl,
-	write("help.           : show available commands"), nl,
-	write("quit.           : quit the game"), nl.
+	write("start.          : start game"), nl,
+    write("load.           : load game"), nl,
+	write("save(Filename). : save game"), nl,
+	write("status.         : lihat status kamu, single </3"), nl,
+	write("map.            : kepo mau liat map"), nl,
+	write("w.		: derapkan langkah tatap ke Utara"), nl,
+	write("a.		: derapkan langkah tatap ke Barat"), nl,
+	write("s.		: derapkan langkah tatap ke Selatan"), nl,
+	write("d.       	: derapkan langkah tatap ke Timur"), nl,
+	write("open_inventory  : cek inventory"), nl,
+    write("store.          : masuk ke dalam toko (harus berada di dekat \'S\')"), nl,
+    write("dungeon.        : masuk ke dalam dungeon (harus berada di dekat \'D\')"), nl,
+	write("quest.		   : terima quest (harus berada di dekat \'Q\' atau tidak ada quest yang aktif)"), nl,
+	write("current_quest.  : cek progres quest yang sedang aktif"), nl,
+	write("help.           : lupa commandnya apa aja? Ketik ini aja"), nl,
+	write("quit.           : keluar dari game :("), nl.
     /* Tambah seperlunya. */
 
 /* Battle messages */
 msg_ask_what_to_do :-
-	write("What are you going to do?"), nl.
+	write("Hayo, mau ngapain?"), nl.
 
 msg_battle_commands :-
-	write("Type \'attack\' or \'special\' or \'do_nothing_if_you_mager_and_mau_bobo_aja\' or \'run\'?"), nl.
+	write("Ketik \'attack.\' atau \'special.\' atau \'do_nothing_if_you_mager_and_mau_bobo_aja.\' atau \'run.\'?"), nl.
 
 msg_attack(Damage) :-
-	write("You deals "), write(Damage), write(" damage to enemy!"), nl.
+	write("Wah ketjeh banget, kamu barusan hantam dengan kekuatan "), write(Damage), write("."), nl.
 
 msg_spattack(Damage) :-
-    write("Special Attack!"), nl,
-	write("You deals "), write(Damage), write(" damage to enemy!"), nl.
+    write("SUPESYARU ATAKKU !1!!!11!1!"), nl,
+	write("Hantaman kamu barusan sebesar "), write(Damage), write("."), nl.
 
 msg_enemy_attack(Damage) :-
-	write("Enemy deals "), write(Damage), write(" damage to you!"), nl.
+	write("Aduh, hantamannya sebesar  "), write(Damage), write(" :("), nl.
 
 msg_special :-
 	char_job(Job),
     special_attack(_, Job, Name, _),
-	write("You used special attack \'"), write(Name), write("\'!"), nl.
+	write("Wah, special attack \'"), write(Name), write(" digunakan!"), nl.
 
 msg_cannot_special :-
-	write("You can\'t use special right now. Choose another move!"), nl.
+	write("Ga bisa pake special attacknya sekarang :'(. Gunakan langkah lain ya :("), nl.
 
 msg_enemy_hp(Enemyid, Enemyhealth) :-
 	enemy(Enemyid, Enemyname, Enemymaxhp, _, _, _),
@@ -124,17 +123,17 @@ msg_player_hp :-
 msg_player_level :-
 	char_level(level),
 	write("Level : "), write(level), nl.
-msg_not_in_battle("Not in battle").
+msg_not_in_battle("Lagi kagak battle cuy.").
 msg_run_success :-
 	write("Kaboerrrrr!"), nl.
 msg_run_failed :-
-	write("Gagal kaboerrr!"), nl.
+	write("Gagal kaboerrr! Mana sempat, keburu dihantam duluan."), nl.
 msg_player_death :-
 	write("Yha keburu mati y. Game over"), nl.
 msg_enemy_death :-
 	write("ggwp ezpz"), nl.
 msg_enemy_found :-
-    write("You found an enemy."), nl.
+    write("Euh, ada enemy."), nl.
 
 msg_pick_job :-
     write("Welcome to Mana Sempat Keburu Telat!"), nl,

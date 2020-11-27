@@ -13,38 +13,92 @@ keburu_telat(
 "88  Yb 888888 88oodP `YbodP' 88  Yb `YbodP'       88   888888 88ood8 dP\"\"\"\"Yb   88   ").
 
 syello :-
-write('///-///'), nl,
-write('|^   ^|'), nl,
-write('|O   O|'), nl,
-write('|  ~  |'), nl,
-write(' - O -        I am the mighty Syello~~~~~'), nl,
-write('  | |'), nl.
+    write('\\\\\\-///'), nl,
+    write('|^   ^|'), nl,
+    write('|O   O|'), nl,
+    write('|  ~  |'), nl,
+    write(' \\ O /        I am the mighty Syello~~~~~'), nl,
+    write('  | |'), nl.
 
 langit :-
-write('   .       .             '), nl,
-write(' +  :      .             '), nl,
-write('           :       _     '), nl,
-write('       .   !   \'\'  (_)    '), nl,
-write('          ,|.\'\'           '), nl,
-write('-  -- ---(-O-`--- --  -  '), nl,
-write('         ,`|\'\'`.          '), nl,
-write('       ,   !    .        '), nl,
-write('           :       :  "  '), nl,
-write('           .     --+--   '), nl,
-write(' .:        .       ! '), nl.
+    write('   .       .             '), nl,
+    write(' +  :      .             '), nl,
+    write('           :       _     '), nl,
+    write('       .   !   \'\'  (_)    '), nl,
+    write('          ,|.\'\'           '), nl,
+    write('-  -- ---(-O-`--- --  -  '), nl,
+    write('         ,`|\'\'`.          '), nl,
+    write('       ,   !    .        '), nl,
+    write('           :       :  "  '), nl,
+    write('           .     --+--   '), nl,
+    write(' .:        .       ! '), nl.
 
 ikan :-
-write('               O  o'), nl,
-write('          _/_   o'), nl,
-write('>(\'\'>   --/  o| .'), nl,
-write('       ///___ ='), nl,
-write('          \'\''), nl.
+    write('               O  o'), nl,
+    write('          _\\_   o  '), nl,  
+    write('>(\'>   \\\\/  o\\ . '), nl,
+    write('       //\\___=   '), nl,
+    write('          \'\' '), nl.
 
 lets_go :-
-write('\'||\'                .   \'\'                           '), nl,
-write(' ||         ....  .||.     ....       ... .   ...   '), nl,
-write(' ||       .|...||  ||     ||. \'      || ||  .|  \'|. '), nl,
-write(' ||       ||       ||     . \'|..      |\'\'\'   ||   || '), nl,
-write('.||.....|  \'|...\'  \'|.\'   |\'..|\'     \'||||.  \'|..|\'\' '), nl,
-write('                                    .|....\'\'         '), nl.
+    write('\'||\'                .   \'\'                           '), nl,
+    write(' ||         ....  .||.     ....       ... .   ...   '), nl,
+    write(' ||       .|...||  ||     ||. \'      || ||  .|  \'|. '), nl,
+    write(' ||       ||       ||     . \'|..      |\'\'\'   ||   || '), nl,
+    write('.||.....|  \'|...\'  \'|.\'   |\'..|\'     \'||||.  \'|..|\'\' '), nl,
+    write('                                    .|....\'\'         '), nl.
                                                  
+the_end :-
+    write('|\'\'||\'\'| \'||  ||` \'||\'\'\'\'|    \'||\'\'\'\'| \'||\\   ||` \'||\'\'\'|. '), nl,
+    write('   ||     ||  ||   ||   .      ||   .   ||\\\\  ||   ||   || '), nl,
+    write('   ||     ||\'\'||   ||\'\'\'|      ||\'\'\'|   || \\\\ ||   ||   || '), nl,
+    write('   ||     ||  ||   ||          ||       ||  \\\\||   ||   || '), nl,
+    write('  .||.   .||  ||. .||....|    .||....| .||   \\||. .||...|\' '), nl.
+
+papa_syello :-
+    write('                 ,#####,                         '), nl,
+    write('                 #_   _#                         '), nl,
+    write('                 |a` `a|                         '), nl,
+    write('                 |  u  |     I am your father, Syello'), nl,
+    write('                 \\  =  /                         '), nl,
+    write('                 |\\___/|                     '), nl,
+    write('        ___ ____/:     :\\____ ___'), nl,
+    write('      .\'   `.-===-\\   /-===-.`   \'.'), nl,
+    write('     /      .-"""""-.-"""""-.      \\'), nl,
+    write('    /\'             =:=             \'\\'), nl,
+    write('  .\'  \' .:    o   -=:=-   o    :. \'  `.'), nl,
+    write('  (.\'   /\'. \'-.....-\'-.....-\' .\'\\   \'.)'), nl,
+    write('  /\' ._/   \".     --:--     .\"   \\_. \'\\'), nl,
+    write(' |  .\'|      \".  ---:---  .\"      |\\\'.  |'), nl,
+    write(' |  : |       |  ---:---  |       | :  |'), nl,
+    write('  \\ : |       |_____._____|       | : /'), nl,
+    write('  /   (       |----|------|       )   \\'), nl,
+    write(' /... .|      |    |      |      |. ...\\'), nl,
+    write('|::::/\'\'     /     |       \\     \'\'\\::::|'), nl,
+    write('\'\"\"\"\"       /\'    .L_      `\\       \"\"\"\"\''), nl,
+    write('           /\'-.,__/` `\\__..-\'\\'), nl,
+    write('          ;      /     \\      ;'), nl,
+    write('          :     /       \\     |'), nl,
+    write('          |    /         \\.   |'), nl,
+    write('          |`../           |  ,/'), nl,
+    write('          ( _ )           |  _)'), nl,
+    write('          |   |           |   |'), nl,
+    write('          |___|           \\___|'), nl,
+    write('          :===|            |==|'), nl,
+    write('           \\  /            |__|'), nl,
+    write('           /\\/\\           /"""`8.__'), nl,
+    write('           |oo|           \\__.//___)'), nl,
+    write('           |==|'), nl,
+    write('           \\__/'), nl.
+
+nyerang_bumi :-
+    write('             _____           '), nl,
+    write('          .-\'.  \':\'-.        '), nl,
+    write('        .\'\'::: .:    \'.      '), nl,
+    write('       /   :::::\'      \\     '), nl,
+    write('      ;.    \':\' `       ;'), nl,
+    write('      |       \'..       |       This world i want boom boom'), nl,
+    write('      ; \'      ::::.    ;'), nl,
+    write('       \\       \'::::   /'), nl,
+    write('        \'.      :::  .\''), nl,
+    write('           \'-.___\'_.-\''), nl.

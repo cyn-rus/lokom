@@ -18,8 +18,7 @@ store :-
 dungeon :-
     game_start(true),
     in_battle(false),
-    isNear("D"),
-    /* belom ada fungsinya yes */ !.
+    isNear("D"), battle_init_boss, !.
 
 dungeon :-
     game_start(true),

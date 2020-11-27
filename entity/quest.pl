@@ -5,12 +5,9 @@
 :- include("message.pl").
 
 /* Dynamic predicates */
-% Nama Quest, ArrayYgblomdibunuh
+/* Nama Quest, ArrayYgblomdibunuh */
 :- dynamic(current_quest/2).
 :- dynamic(is_in_quest/1).
-
-is_in_quest(false).
-game_start(true).
 
 /* Quest */
 /* Format: Number, ID, kill, ID kill, ...., Gold, Exp */

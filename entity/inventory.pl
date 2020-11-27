@@ -34,36 +34,11 @@ print_potion([H|T]) :-
 
 print_potion([]).
 
-/*
-print_list([H|T]) :- 
-    count_elmt([H|T], NbElmt),
-    ((NbElmt =:= 0) -> 
-    true, ! ; write(H),
-    ((potion(H, Name, _, _, _, _)) ->
-    write('  - '),
-    write(Name), nl, print_list(T) ;
-    
-    equipment(H, Name, _, _, _),
-    write('  - '),
-    write(Name), nl,
-    print_list(T))).
-print_list([]) :- true, !.
-
-print_potion([H|T]) :- 
-    A is [H|T],
-    count_elmt(A, NbElmt),
-    ((NbElmt is 0) -> 
-    true, ! ;
-    ((potion(H, Name, _, _, _, _)) -> write('  - '),
-    write(Name), nl, print_potion(T) ; print_potion(T))).
-print_potion([]) :- true, write('selesai'), !.
-*/
-
 /* Inventory Interactions */
 
 open_inventory :-
     inventory(List, NbElmt),
-    ((NbElmt == 0) -> msg_invent_empty, ! ; (msg_invent_notempty, nl, print_list(List), nl, msg_invent_command), !).
+    ((NbElmt =:= 0) -> msg_invent_empty, nl, ! ; (msg_invent_notempty, nl, print_list(List), nl, msg_invent_command), !).
 
 /*
 open_potion_inventory :-
@@ -90,15 +65,27 @@ add_inventory(Elmt) :-
     asserta(inventory(NewList, NewNbElmt)).
 
 select_weapon :-
-    inventory,
-    msg_select_command, nl.
+    open_inventory,
+    msg_select_command, nl,
+    inventory(_, NbElmt), 
+    NbElmt =:= 0, !, 
+    inventory(_, Y),
+    ((Y > 0) ->
+    write("Masukkan nama Barang menggunakan \" untuk mengequip item: "),
+    read(X), 
+    selects(X) ; true).
 
 selects(X) :- 
     in_battle(false), !,
     inventory(List, _),
-    is_member(X, List),
-    retract(char_weapon(_)),
-    asserta(char_weapon(X)).
+    (equipment(Y, X, _, _, _) -> 
+    (is_member(Y, List) -> 
+    retractall(char_weapon(_)),
+    asserta(char_weapon(Y)) ; msg_remove_fail);
+    msg_remove_fail).
+
+select_armor :-
+    select_weapon.
 
 remove(Item) :-
     inventory(List, NbElmt),
