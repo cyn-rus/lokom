@@ -1,4 +1,4 @@
-/* Fakta mengenai setiap quest, berapa enemy yang harus dikalahkan dan apa bountynya */
+a/* Fakta mengenai setiap quest, berapa enemy yang harus dikalahkan dan apa bountynya */
 
 :- include("enemy.pl").
 :- include("../utils/list.pl").
@@ -52,11 +52,12 @@ print_curr_quest(Name) :-
 
 /* Quest is chosen! */
 choose_quest(Num) :-
+    retractall(current_quest(_, _)),
     retract(is_in_quest(false)),
     asserta(is_in_quest(true)),
     quest(Num, Name, Arr, _, _),
     asserta(current_quest(Name, Arr)),
-    msg_quest_took_quest(Name), nl, nl, map.
+    msg_quest_took_quest(Name), nl, nl, map, !.
 
 acc_quest :-
     is_in_quest(false),

@@ -31,8 +31,9 @@ start :-
     asserta(game_start(true)),
     asserta(in_battle(false)),
     story_intro,
+    show_help,
     pick_job, asserta(inventory([], 0)), asserta(gold(0)), asserta(is_in_quest(false)),
-    generate_structure, map_player(P),
+    generate_structure, map_player(P), asserta(current_quest("dummy", [])),
     asserta(map_object(20,1, P)).
 
 start :-
@@ -49,7 +50,13 @@ game_over :-
     asserta(game_start(false)),
     retractall(map_object(_,_,_)),
     retractall(inventory(_,_)),
-    retractall(gold(_)),
+    retractall(gold(_)), 
+    retractall(char_level(_)), retractall(char_exp(_)), retractall(char_job(_)),
+    retractall(char_maxhp(_)), retractall(char_hp(_)), retractall(char_maxexp(_)),
+    retractall(char_attack(_)), retractall(char_defense(_)),
+    retractall(char_weapon(_)), retractall(char_armor(_)), retractall(char_accessories(_)),
+    retractall(is_in_quest(_)), retractall(current_quest(_,_)),
+    retractall(in_battle(_)),
     ask_play_again.
 
 ask_play_again :-

@@ -66,3 +66,7 @@ teleport :-
 
 teleport :- game_start(false), msg_game_not_started(MSG), write(MSG), !.
 teleport :- in_battle(true), msg_in_battle(MSG), write(MSG), !.
+
+suicide :-
+    write("Anda bunuh diri. :<"), nl,
+    game_over, nl.

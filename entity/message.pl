@@ -49,7 +49,7 @@ msg_quest_took_quest(Name) :-
 msg_invent_empty :-
 	write("Heh, inventory kamu k o s o n g."), nl.
 msg_invent_notempty :-
-	write("Hemmmmmmm, jadi isi inventory kamu: ").
+	write("Hemmmmmmm, jadi isi inventory kamu: "), nl.
 msg_invent_command :-
 	write("Mau buang barang ga berguna? Ketik aja \'remove(Item).\', \'Item\' yang dimaksud ini nama barangnya yaaa :3 pake kutip \" jangan lupa"), nl.
 
@@ -66,24 +66,29 @@ msg_select_command :-
 
 /* Help Messages */
 show_help :-
-    write("COMMAND LIST"), nl,
-    nl,
-	write("start.          : start game"), nl,
-    write("load.           : load game"), nl,
-	write("save(Filename). : save game"), nl,
-	write("status.         : lihat status kamu, single </3"), nl,
-	write("map.            : kepo mau liat map"), nl,
-	write("w.		: derapkan langkah tatap ke Utara"), nl,
-	write("a.		: derapkan langkah tatap ke Barat"), nl,
-	write("s.		: derapkan langkah tatap ke Selatan"), nl,
-	write("d.       	: derapkan langkah tatap ke Timur"), nl,
-	write("open_inventory  : cek inventory"), nl,
-    write("store.          : masuk ke dalam toko (harus berada di dekat \'S\')"), nl,
-    write("dungeon.        : masuk ke dalam dungeon (harus berada di dekat \'D\')"), nl,
-	write("quest.		: terima quest (harus berada di dekat \'Q\' atau tidak ada quest yang aktif)"), nl,
-	write("current_quest.  : cek progres quest yang sedang aktif"), nl,
-	write("help.           : lupa commandnya apa aja? Ketik ini aja"), nl,
-	write("quit.           : keluar dari game :("), nl.
+    write("                          COMMAND LIST                          "), nl,
+	write(" ==============================================================="), nl,
+	write("||start.              : start game"), nl,
+    write("||load.               : load game"), nl,
+	write("||save(Filename).     : save game"), nl,
+	write("||show_status.        : lihat status kamu, single </3"), nl,
+	write("||map.                : kepo mau liat map"), nl,
+	write("||w.    				 : derapkan langkah tatap ke Utara"), nl,
+	write("||a.	    	   		 : derapkan langkah tatap ke Barat"), nl,                                 
+	write("||s.	   				 : derapkan langkah tatap ke Selatan"), nl,
+	write("||d.       	   		 : derapkan langkah tatap ke Timur"), nl,
+	write("||open_inventory.     : cek inventory"), nl,
+	write("||select_weapon.      : untuk memilih weapon"), nl,
+	write("||select_armor.       : untuk memilih armor "), nl,
+	write("||select_accessories. : untuk memilih accessories"), nl,
+    write("||store.              : masuk ke dalam toko (harus berada di dekat \'S\')"), nl,
+    write("||dungeon.            : masuk ke dalam dungeon (harus berada di dekat \'D\')"), nl,
+	write("||quest.              : terima quest (harus berada di dekat \'Q\'"), nl,
+	write("||                      dan tidak ada quest yang aktif)"), nl,
+	write("||current_quest.      : cek progres quest yang sedang aktif"), nl,
+	write("||help.               : lupa commandnya apa aja? Ketik ini aja"), nl,
+	write("||quit.               : keluar dari game :("), nl,
+	write(" ==============================================================="),nl.
     /* Tambah seperlunya. */
 
 /* Battle messages */

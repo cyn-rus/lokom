@@ -7,6 +7,7 @@ store_status(0).
 open_store :-
     store_status(0),
     game_start(true),
+    in_battle(false),
     msg_store_welcome(MSG, MSG2, MSG3, MSG4),
     write(MSG), nl, write(MSG2), nl, write(MSG3), nl, write(MSG4), nl,
     gold(X),
@@ -31,18 +32,18 @@ gacha :-
     equipment(ID, Name, Att, Def, HP), msg_gacha_get(MSG),
     write(MSG), item_print(Name, Att, Def, HP),
     /* Input to Inventory */
-    add_inventory(ID).
+    add_inventory(ID), nl, nl, open_store.
 
 /* Case: inventory full */
 gacha :-
     inventory(_, NbElmt),
     NbElmt >= 100,
-    msg_store_inventory_full(MSG), write(MSG), !.
+    msg_store_inventory_full(MSG), write(MSG), nl, nl, open_store, !.
 
 /* Case: gold not enough */
 gacha :-
     (\+ gold_enough(100)),
-    msg_store_gold_not_enough(MSG), write(MSG), !.
+    msg_store_gold_not_enough(MSG), write(MSG), nl, nl, open_store, !.
 
 gacha :-
     game_start(true), (\+ isNear("S")),

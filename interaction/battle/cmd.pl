@@ -15,7 +15,7 @@ attack :-
     NextHP is HP - Total,
     msg_attack(Total),
     update_enemy_hp(NextHP),
-    battle_tick, enemy_attack, !.
+    battle_tick,  enemy_attack, !.
 
 attack :- 
     in_battle(false),

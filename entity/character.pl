@@ -130,7 +130,9 @@ show_status :-
     gold(Gold),
     write("Gold : "), write(Gold), nl,
     write("Weapon : "), write(WName),
-    write("Armor : "), write(AName).
+    write("Armor : "), write(AName),
+    char_accessories(Ax), equipment(Ax, AxN, _, _, _),
+    write("Accessories: "), write(AxN).
 
 addExp(Add) :-
     msg_get_exp(Add),
