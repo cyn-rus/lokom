@@ -5,8 +5,6 @@
 :- dynamic(is_in_quest/1).
 :- dynamic(current_temp/1).
 
-is_in_quest(false).
-
 /* Quest */
 /* Format: Number, ID, kill, ID kill, ...., Gold, Exp */
 quest(1, "Mana Tahu", [0, 5], 10, 10).
@@ -50,12 +48,12 @@ print_curr_quest(Name) :-
 
 /* Quest is chosen! */
 choose_quest(Num) :-
+    retractall(current_quest(_, _)),
     retract(is_in_quest(false)),
     asserta(is_in_quest(true)),
     quest(Num, Name, Arr, _, _),
     asserta(curr_quest(Name, Arr)),
-    msg_quest_took_quest(Name), nl, nl.
-    /*, map*/
+    msg_quest_took_quest(Name), nl, nl, map, !.
 
 acc_quest :-
     is_in_quest(false),
