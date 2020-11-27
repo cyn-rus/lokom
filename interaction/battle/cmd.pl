@@ -51,3 +51,15 @@ special :-
 special :-
     in_battle(false),
     msg_not_in_battle, !.
+
+% use_potion :- 
+    % in_battle(true),
+    % inventory(_, NbElmt),
+    % NbElmt =:= 0,
+    % write('You don\'t have any potions in your inventory'), nl.
+    
+use_potion :-
+    in_battle(true),
+    write('Select your potions: '),
+    inventory(X, _),
+    print_potion(X).

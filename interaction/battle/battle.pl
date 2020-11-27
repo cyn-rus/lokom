@@ -69,6 +69,8 @@ battle_tick :-
     update_battle(false), ! ; true),
     ((EHP =< 0) ->
     msg_enemy_death,
+    enemy_status(ID, _),
+    is_enemy_in_quest(ID),
     enemy(_, _, _, _, _, Lvl),
     random(4, Lvl, Exp),
     addExp(Exp),
